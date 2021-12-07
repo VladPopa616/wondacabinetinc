@@ -1,4 +1,4 @@
-package com.wondacabinetinc.wondacabinetinc.datalayer;
+package com.wondacabinetinc.datalayer;
 
 import org.springframework.lang.NonNull;
 
@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="customers")
-public class Customer {
+public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long accountID;
@@ -28,10 +28,10 @@ public class Customer {
     @NonNull
     private String password;
 
-    public Customer() {
+    public Employee() {
     }
 
-    public Customer(long accountID, @NonNull String firstName, @NonNull String lastName, @NonNull String email, @NonNull String password) {
+    public Employee(long accountID, @NonNull String firstName, @NonNull String lastName, @NonNull String email, @NonNull String password) {
         this.accountID = accountID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,7 +39,7 @@ public class Customer {
         this.password = password;
     }
 
-    public Customer(@NonNull String firstName, @NonNull String lastName, @NonNull String email, @NonNull String password) {
+    public Employee(@NonNull String firstName, @NonNull String lastName, @NonNull String email, @NonNull String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -90,3 +90,4 @@ public class Customer {
         this.password = password;
     }
 }
+
