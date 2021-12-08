@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <table id="order">
+        <thead>
+        <tr>
+            <th>Tracking Number</th>
+            <th>Design</th>
+            <th>Order Status</th>
+        </tr>
+        </thead>
+
+        <tr id="orderId" ng-repeat="order in $ctrl.order | filter:$ctrl.query track by order.id">
+            <td>{{order.trackingNo}}</td>
+            <td>{{order.design}}</td>
+            <td>{{order.orderStatus}}</td>
+        </tr>
+    </table>
+
+</body>
+</html>
