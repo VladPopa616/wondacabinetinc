@@ -1,12 +1,13 @@
-package com.wondacabinetinc.presentationlayer;
-
-import com.wondacabinetinc.businesslayer.OrderService;
-import com.wondacabinetinc.datalayer.Order;
+package com.wondacabinetinc.wondacabinetinc.presentationlayer;
+import com.wondacabinetinc.wondacabinetinc.businesslayer.OrderService;
+import com.wondacabinetinc.wondacabinetinc.datalayer.Order;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,15 @@ public class OrderResource {
     }
 
     @GetMapping
+    @ResponseBody
     public List<Order> findAllOrders(){
-        return orderService.getAllOrders();
+        List<Order> orders = new ArrayList<>();
+        Iterable<Order> allOrders = orderService.getAllOrders();
+
+        for(Order order : allOrders){
+            orders.add(order);
+        }
+
+        return orders;
     }
 }

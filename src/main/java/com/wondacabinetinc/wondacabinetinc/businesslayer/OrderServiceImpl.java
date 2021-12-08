@@ -1,7 +1,8 @@
-package com.wondacabinetinc.businesslayer;
+package com.wondacabinetinc.wondacabinetinc.businesslayer;
 
-import com.wondacabinetinc.datalayer.Order;
-import com.wondacabinetinc.datalayer.OrderRepository;
+
+import com.wondacabinetinc.wondacabinetinc.datalayer.Order;
+import com.wondacabinetinc.wondacabinetinc.datalayer.OrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getAllOrders() {
+
         return orderRepository.findAll();
     }
 }

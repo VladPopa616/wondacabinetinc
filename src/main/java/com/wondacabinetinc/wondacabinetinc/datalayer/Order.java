@@ -1,35 +1,38 @@
-package com.wondacabinetinc.datalayer;
+package com.wondacabinetinc.wondacabinetinc.datalayer;
 
-import org.springframework.lang.NonNull;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name="orders")
+@Table(name = "orders")
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Order {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int orderId;
+    @Column(name="orderId")
+    private Integer orderId;
 
     @Column(name="orderStatus")
     private String orderStatus;
 
     @Column(name="trackingNo")
-    private String trackingNo;
+    @JsonIgnore
+    private Long trackingNo;
 
     @Column(name="design")
     private String design;
 
-    public Order(int orderId, String orderStatus, String trackingNo, String design) {
+    public Order(int orderId, String orderStatus, long trackingNo, String design) {
         this.orderId = orderId;
         this.orderStatus = orderStatus;
         this.trackingNo = trackingNo;
         this.design = design;
     }
 
-    public Order(String orderStatus, String trackingNo, String design) {
+    public Order(String orderStatus, long trackingNo, String design) {
         this.orderStatus = orderStatus;
         this.trackingNo = trackingNo;
         this.design = design;
@@ -54,11 +57,11 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    public String getTrackingNo() {
+    public long getTrackingNo() {
         return trackingNo;
     }
 
-    public void setTrackingNo(String trackingNo) {
+    public void setTrackingNo(long trackingNo) {
         this.trackingNo = trackingNo;
     }
 
