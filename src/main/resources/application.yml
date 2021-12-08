@@ -1,17 +1,8 @@
 server.port: 7001
 
-server:
-  error:
-    include-message: always
+server.error.include-message: always
 
-logging:
-  level:
-    root: INFO
-    com.petclinic: DEBUG
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
----
 spring.jpa.hibernate.ddl-auto: update
 
 spring.datasource:
@@ -20,39 +11,33 @@ spring.datasource:
   password: pwd
 
 spring.datasource.hikari.initializationFailTimeout: 60000
-#
-#logging:
-#  level:
-#    root: INFO
-#    com.liang: DEBUG
-#    org.hibernate.SQL: DEBUG
-#    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-#
-#---
-##spring.profiles: docker
-#
-#spring.datasource:
-#  url: jdbc:mysql://mysql/WondaCabinetIncDb
-#
-#server.port: 8080
+
+logging:
+  level:
+    root: INFO
+    com.wondacabinetinc: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+
 ---
 spring.profiles: docker
 
 spring:
   datasource:
     platform: mysql
-    url: jdbc:mysql://mysql1/WondaCabinetIncDb
+
+    url: jdbc:mysql://mysql/WondaCabinetIncDb
     username: user
     password: pwd
     initialization-mode: always
 
+    jpa:
+      hibernate:
+        ddl-auto: none
 
-  # recommend setting this to "none" for production environments
+    spring.datasource.hikari.initializationFailTimeout: 60000
 
-  jpa:
-    hibernate:
-      ddl-auto: none
-
-spring.datasource.hikari.initializationFailTimeout: 60000
 
 server.port: 8080
+
