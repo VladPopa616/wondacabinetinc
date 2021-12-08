@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(SpringExtension.class)
 @AutoConfigureWebTestClient
 public class WondacabinetincApplicationTests {
-	
+
 //	@Test
 //	void contextLoads() {
 //    }
