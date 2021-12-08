@@ -8,13 +8,15 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ExtendWith(SpringExtension.class)
 @AutoConfigureWebTestClient
 public class WondacabinetincApplicationTests {
-
-	@Test
-	void contextLoads() {
-    }
+	
+//	@Test
+//	void contextLoads() {
+//    }
 }
