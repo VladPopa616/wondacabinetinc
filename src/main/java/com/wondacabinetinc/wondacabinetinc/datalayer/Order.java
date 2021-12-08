@@ -18,7 +18,6 @@ public class Order {
     private String orderStatus;
 
     @Column(name="trackingNo")
-
     private Long trackingNo;
 
     @Column(name="design")
