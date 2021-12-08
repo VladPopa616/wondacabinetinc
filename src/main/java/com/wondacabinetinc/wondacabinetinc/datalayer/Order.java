@@ -12,14 +12,12 @@ import javax.persistence.*;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="orderId")
     private Integer orderId;
 
     @Column(name="orderStatus")
     private String orderStatus;
 
     @Column(name="trackingNo")
-    @JsonIgnore
     private Long trackingNo;
 
     @Column(name="design")
