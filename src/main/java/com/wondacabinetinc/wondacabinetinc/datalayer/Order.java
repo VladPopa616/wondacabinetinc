@@ -12,7 +12,6 @@ import javax.persistence.*;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="orderId")
     private Integer orderId;
 
     @Column(name="orderStatus")

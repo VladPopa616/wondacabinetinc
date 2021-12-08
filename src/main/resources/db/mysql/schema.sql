@@ -5,8 +5,8 @@ GRANT ALL PRIVILEGES ON WondaCabinetIncDb.* TO 'user'@'%';
 USE WondacabinetIncDb;
 
 CREATE TABLE IF NOT EXISTS orders (
-    orderId INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    rderStatus VARCHAR(45),
-    trackingNo LONG,
+    order_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    order_status VARCHAR(45),
+    tracking_no LONG,
     design VARCHAR(80)
     ) ENGINE=InnoDb;
