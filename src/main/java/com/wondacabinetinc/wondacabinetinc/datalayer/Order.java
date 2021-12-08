@@ -18,7 +18,7 @@ public class Order {
     private String orderStatus;
 
     @Column(name="trackingNo")
-    @JsonIgnore
+    
     private Long trackingNo;
 
     @Column(name="design")
