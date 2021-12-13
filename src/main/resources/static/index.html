@@ -2,18 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Orders</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"/>
     <script src='index.js' defer></script>
+
 </head>
 <body>
 <h2>ORDERS</h2>
-<div id='orders'>
+<table id='orders' border="1">
     <tr>
         <th>Tracking Number</th>
         <th>Order Status</th>
         <th>Design</th>
     </tr>
-</div>
+    <tr id="ordertr" ng-repeat="orders in $ctrl.ordersList">
+        <td>{{orders.trackingNo}}</td>
+        <td>{{orders.design}}</td>
+        <td>{{orders.orderStatus}}</td>
+    </tr>
+</table>
 </body>
 </html>

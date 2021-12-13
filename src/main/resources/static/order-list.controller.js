@@ -5,7 +5,7 @@ angular.module('ordersList')
         var self = this;
 
         $http.get('/orders').then(function (resp) {
-            self.owners = resp.data;
+            self.orders = resp.data;
             console.log(resp)
         });
     }]);

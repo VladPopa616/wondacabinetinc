@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@CrossOrigin(origins="http://localhost:7001/orders")
+@CrossOrigin(origins = "*")
 @RequestMapping("/orders")
 public class OrderResource {
     private final OrderService orderService;
@@ -20,6 +20,7 @@ public class OrderResource {
 
     @GetMapping
     @ResponseBody
+    @CrossOrigin(origins = "*")
     public List<Order> findAllOrders(){
         List<Order> orders = new ArrayList<>();
         Iterable<Order> allOrders = orderService.getAllOrders();
