@@ -13,6 +13,9 @@ public class OrderDetails {
     @GeneratedValue
     private Integer orderId;
 
+    @OneToOne(fetch=FetchType.LAZY, mappedBy = "orderDetails")
+    private Order order;
+
     @Column(name="cabinet_type")
     private String cabinetType;
 

@@ -14,6 +14,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderId;
 
+    @OneToOne
+    @JoinColumn(name="order_id")
+    private OrderDetails orderDetails;
+
     @Column(name="orderStatus")
     private String orderStatus;
 
@@ -69,5 +73,13 @@ public class Order {
 
     public void setDesign(String design) {
         this.design = design;
+    }
+
+    public OrderDetails getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(OrderDetails orderDetails) {
+        this.orderDetails = orderDetails;
     }
 }
