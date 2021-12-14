@@ -2,6 +2,8 @@ package com.wondacabinetinc.wondacabinetinc.businesslayer;
 
 
 import com.wondacabinetinc.wondacabinetinc.datalayer.Order;
+import com.wondacabinetinc.wondacabinetinc.datalayer.OrderDetails;
+import com.wondacabinetinc.wondacabinetinc.datalayer.OrderDetailsRepository;
 import com.wondacabinetinc.wondacabinetinc.datalayer.OrderRepository;
 import com.wondacabinetinc.wondacabinetinc.utils.exceptions.InvalidInputException;
 import com.wondacabinetinc.wondacabinetinc.utils.exceptions.NotFoundException;
@@ -20,8 +22,11 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    private final OrderDetailsRepository orderDetailsRepository;
+
+    public OrderServiceImpl(OrderRepository orderRepository, OrderDetailsRepository orderDetailsRepository) {
         this.orderRepository = orderRepository;
+        this.orderDetailsRepository = orderDetailsRepository;
     }
 
     @Override
