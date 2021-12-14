@@ -11,4 +11,6 @@ public interface OrderService {
 
     public Optional<Order> getOrderDetails(int id);
 
+    public Order addOrder(Order order);
+
 }
