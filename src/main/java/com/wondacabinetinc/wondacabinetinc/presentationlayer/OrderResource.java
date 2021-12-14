@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -30,5 +31,12 @@ public class OrderResource {
         }
 
         return orders;
+    }
+
+    @GetMapping("/{orderId}")
+    @ResponseBody
+    @CrossOrigin(origins = "*")
+    public Optional<Order> getOrderDetails(@PathVariable("orderId") int orderId){
+        return orderService.getOrderDetails(orderId);
     }
 }
