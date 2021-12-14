@@ -29,9 +29,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Optional<Order> getOrderDetails(Integer id) {
+    public Optional<Order> getOrderDetails(int id) {
         try{
-            Optional<Order> order = orderRepository.getDetails(id);
+            Optional<Order> order = orderRepository.findById(id);
             LOG.debug("Order with Id: " + id + " has been found");
             return order;
         }

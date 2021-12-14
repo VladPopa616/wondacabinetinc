@@ -36,7 +36,7 @@ public class OrderResource {
     @GetMapping("/{orderId}")
     @ResponseBody
     @CrossOrigin(origins = "*")
-    public Optional<Order> getOrderDetails(@PathVariable("orderId") Integer orderId){
+    public Optional<Order> getOrderDetails(@PathVariable("orderId") int orderId){
         return orderService.getOrderDetails(orderId);
     }
 }

@@ -10,8 +10,4 @@ import java.util.Optional;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-    @Query("select o.orderId, o.trackingNo, o.orderStatus " +
-            "FROM Order o " +
-            "INNER JOIN o.orderDetails od where od.orderId = :orderId")
-    Optional<Order> getDetails(@Param("orderId") Integer orderId);
 }
