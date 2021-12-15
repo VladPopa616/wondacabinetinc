@@ -10,7 +10,7 @@ public interface OrderService {
 
     public List<Order> getAllOrders();
 
-    public Optional<Order> getOrderDetails(int id);
+    public Optional<Order> getOrderDetails(Integer id);
 
     public Order addOrder(Order order);
 }

@@ -11,7 +11,7 @@ import org.springframework.web.filter.CorsFilter;
 import java.util.Arrays;
 
 @SpringBootApplication
-@ComponentScan("com.wondacabinetinc")
+@ComponentScan("com.wondacabinetinc.wondacabinetinc")
 public class WondacabinetincApplication {
 
 	public static void main(String[] args) {

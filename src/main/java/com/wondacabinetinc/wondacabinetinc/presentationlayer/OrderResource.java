@@ -1,6 +1,8 @@
 package com.wondacabinetinc.wondacabinetinc.presentationlayer;
+import com.wondacabinetinc.wondacabinetinc.businesslayer.OrderDetailsService;
 import com.wondacabinetinc.wondacabinetinc.businesslayer.OrderService;
 import com.wondacabinetinc.wondacabinetinc.datalayer.Order;
+import com.wondacabinetinc.wondacabinetinc.datalayer.OrderDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +18,11 @@ import java.util.Optional;
 public class OrderResource {
     private final OrderService orderService;
 
-    public OrderResource(OrderService orderService) {
+    private final OrderDetailsService orderDetailsService;
+
+    public OrderResource(OrderService orderService, OrderDetailsService orderDetailsService) {
         this.orderService = orderService;
+        this.orderDetailsService = orderDetailsService;
     }
 
     @GetMapping
@@ -47,5 +52,13 @@ public class OrderResource {
     @CrossOrigin(origins = "*")
     public Order addNewOrder(@RequestBody Order order){
         return orderService.addOrder(order);
+    }
+
+    @PostMapping(value = "/{orderId}/new", consumes = "application/json", produces = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    @CrossOrigin(origins = "*")
+    public OrderDetails addDetailsToOrder(@RequestBody OrderDetails orderDetails, @PathVariable("orderId") Integer orderId){
+        return orderDetailsService.addOrderDetailsToOrder(orderDetails, orderId);
     }
 }

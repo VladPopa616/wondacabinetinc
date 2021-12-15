@@ -22,11 +22,11 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
 
-    private final OrderDetailsRepository orderDetailsRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, OrderDetailsRepository orderDetailsRepository) {
+
+    public OrderServiceImpl(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
-        this.orderDetailsRepository = orderDetailsRepository;
+
     }
 
     @Override
@@ -36,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Optional<Order> getOrderDetails(int id) {
+    public Optional<Order> getOrderDetails(Integer id) {
         try{
             Optional<Order> order = orderRepository.findById(id);
             LOG.debug("Order with Id: " + id + " has been found");
