@@ -17,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -106,6 +107,26 @@ public class OrderServiceTest {
             orderService.addOrder(order);
         }
         catch(NullPointerException e){
+            assertEquals(e.getMessage(), expectedMsg);
+        }
+    }
+
+    @DisplayName("Add an order duplicate key")
+    @Test
+    public void add_order_throws_duplicate_key_when_id_exists(){
+        Order order = new Order(1,null,
+                null, null,
+                null,null,
+                null, null);
+
+        String expectedMsg = "Duplicate Key, orderId: " + order.getOrderId();
+
+        when(orderRepository.save(Mockito.any(Order.class))).thenThrow(new DuplicateKeyException("Duplicate Key, orderId: " + order.getOrderId()));
+
+        try{
+            orderService.addOrder(order);
+        }
+        catch(DuplicateKeyException e){
             assertEquals(e.getMessage(), expectedMsg);
         }
     }
