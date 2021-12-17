@@ -130,4 +130,20 @@ public class OrderServiceTest {
             assertEquals(e.getMessage(), expectedMsg);
         }
     }
+
+    @DisplayName("Find order by ID")
+    @Test
+    public void find_order_by_id(){
+        Order order = new Order(1, "Done",
+                (long)555555, "Design",
+                "Kitchen Cabinet","White",
+                "Birch", "Circle");
+
+        when(orderRepository.findById(1)).thenReturn(Optional.of(order));
+
+        Optional<Order> retrievedOrder = orderRepository.findById(1);
+        Order receivedOrder = retrievedOrder.get();
+
+        assertThat(receivedOrder.getOrderId()).isEqualTo(order.getOrderId());
+    }
 }
