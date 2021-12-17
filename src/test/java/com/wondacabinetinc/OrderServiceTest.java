@@ -4,10 +4,12 @@ import com.wondacabinetinc.wondacabinetinc.businesslayer.OrderService;
 import com.wondacabinetinc.wondacabinetinc.datalayer.Order;
 import com.wondacabinetinc.wondacabinetinc.datalayer.OrderRepository;
 import com.wondacabinetinc.wondacabinetinc.presentationlayer.OrderResource;
+import com.wondacabinetinc.wondacabinetinc.utils.exceptions.NotFoundException;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -86,5 +88,25 @@ public class OrderServiceTest {
         MatcherAssert.assertThat(retrievedOrder.get(), samePropertyValuesAs(order));
 
 
+    }
+
+    @DisplayName("Add an order null value")
+    @Test
+    public void add_order_throws_not_found_when_null_value(){
+        Order order = new Order("Done",
+                (long)555555, "Design",
+                "Kitchen Cabinet","White",
+                "Birch", "Circle");
+
+        String expectedMsg = "Error adding Order, missing inputs";
+
+        when(orderRepository.save(Mockito.any(Order.class))).thenThrow(new NotFoundException("Error adding Order, missing inputs"));
+
+        try{
+            orderService.addOrder(order);
+        }
+        catch(NullPointerException e){
+            assertEquals(e.getMessage(), expectedMsg);
+        }
     }
 }
