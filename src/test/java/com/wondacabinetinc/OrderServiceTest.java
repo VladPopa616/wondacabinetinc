@@ -146,4 +146,20 @@ public class OrderServiceTest {
 
         assertThat(receivedOrder.getOrderId()).isEqualTo(order.getOrderId());
     }
+
+    @DisplayName("Find by Order ID Not Found")
+    @Test
+    public void find_by_order_id_throws_not_found_when_order_does_not_exist(){
+        int orderId = 1;
+        String expectedMsg = "Order with Id: " + orderId + " not found";
+
+        when(orderRepository.findById(Mockito.anyInt())).thenThrow(new NotFoundException());
+
+        try{
+            orderService.getOrderDetails(orderId);
+        }
+        catch(NotFoundException e){
+            assertEquals(e.getMessage(), expectedMsg);
+        }
+    }
 }
