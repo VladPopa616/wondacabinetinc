@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 
 @Entity
 @Table(name = "orders")
@@ -12,20 +13,67 @@ import javax.persistence.*;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="order_id")
     private Integer orderId;
-
-    @OneToOne
-    @JoinColumn(name="order_id")
-    private OrderDetails orderDetails;
 
     @Column(name="orderStatus")
     private String orderStatus;
 
     @Column(name="trackingNo")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Digits(integer = 6, fraction = 0)
     private Long trackingNo;
 
     @Column(name="design")
     private String design;
+
+    @Column(name="cabinet_type")
+    private String cabinetType;
+
+    @Column(name="color")
+    private String color;
+
+    @Column(name="material")
+    private String material;
+
+    @Column(name="handle_type")
+    private String handleType;
+
+    public void setTrackingNo(Long trackingNo) {
+        this.trackingNo = trackingNo;
+    }
+
+    public String getCabinetType() {
+        return cabinetType;
+    }
+
+    public void setCabinetType(String cabinetType) {
+        this.cabinetType = cabinetType;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public String getHandleType() {
+        return handleType;
+    }
+
+    public void setHandleType(String handleType) {
+        this.handleType = handleType;
+    }
 
     public Order(int orderId, String orderStatus, long trackingNo, String design) {
         this.orderId = orderId;
@@ -47,7 +95,7 @@ public class Order {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
+    public void setOrderId(Integer orderId) {
         this.orderId = orderId;
     }
 
@@ -75,11 +123,5 @@ public class Order {
         this.design = design;
     }
 
-    public OrderDetails getOrderDetails() {
-        return orderDetails;
-    }
 
-    public void setOrderDetails(OrderDetails orderDetails) {
-        this.orderDetails = orderDetails;
-    }
 }
