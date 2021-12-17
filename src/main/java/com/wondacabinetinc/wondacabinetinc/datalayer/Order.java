@@ -12,7 +12,8 @@ import javax.validation.constraints.Digits;
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="order_id")
     private Integer orderId;
 
     @Column(name="orderStatus")
