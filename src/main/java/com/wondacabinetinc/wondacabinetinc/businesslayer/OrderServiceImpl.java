@@ -54,5 +54,8 @@ public class OrderServiceImpl implements OrderService {
         catch(DuplicateKeyException e){
             throw new InvalidInputException("Duplicate Key, orderId: " + order.getOrderId());
         }
+        catch(NullPointerException e){
+            throw new NotFoundException("Error adding Order, missing inputs");
+        }
     }
 }

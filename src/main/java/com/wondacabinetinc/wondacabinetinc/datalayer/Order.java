@@ -88,6 +88,27 @@ public class Order {
         this.design = design;
     }
 
+    public Order(Integer orderId, String orderStatus, @Digits(integer = 6, fraction = 0) Long trackingNo, String design, String cabinetType, String color, String material, String handleType) {
+        this.orderId = orderId;
+        this.orderStatus = orderStatus;
+        this.trackingNo = trackingNo;
+        this.design = design;
+        this.cabinetType = cabinetType;
+        this.color = color;
+        this.material = material;
+        this.handleType = handleType;
+    }
+
+    public Order(String orderStatus, @Digits(integer = 6, fraction = 0) Long trackingNo, String design, String cabinetType, String color, String material, String handleType) {
+        this.orderStatus = orderStatus;
+        this.trackingNo = trackingNo;
+        this.design = design;
+        this.cabinetType = cabinetType;
+        this.color = color;
+        this.material = material;
+        this.handleType = handleType;
+    }
+
     public Order() {
     }
 
