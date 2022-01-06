@@ -18,4 +18,5 @@ public interface OrderService {
     public List<Order> getCancelledOrders();
 
     public Order updateOrder(Integer id, Order order);
+
 }
