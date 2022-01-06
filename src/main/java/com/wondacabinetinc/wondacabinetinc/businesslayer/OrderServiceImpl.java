@@ -39,6 +39,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> getCancelledOrders() {
+        return orderRepository.findByOrderStatusIs("Cancelled");
+    }
+
+    @Override
     public Optional<Order> getOrderDetails(Integer id) {
         try{
             Optional<Order> order = orderRepository.findById(id);
