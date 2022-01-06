@@ -69,4 +69,28 @@ public class OrderServiceImpl implements OrderService {
             throw new NotFoundException("Error adding Order, missing inputs");
         }
     }
+
+    @Override
+    public Order updateOrder(Integer id, Order order) {
+        try{
+            Optional<Order> orderOpt = orderRepository.findById(id);
+            Order foundOrder = orderOpt.get();
+            foundOrder.setOrderStatus(order.getOrderStatus());
+            foundOrder.setTrackingNo(order.getTrackingNo());
+            foundOrder.setDesign(order.getDesign());
+            foundOrder.setCabinetType(order.getCabinetType());
+            foundOrder.setMaterial(order.getMaterial());
+            foundOrder.setColor(order.getColor());
+            foundOrder.setHandleType(order.getHandleType());
+
+            LOG.debug("Order with Id {} updated", id);
+            return orderRepository.save(foundOrder);
+
+        }
+        catch(Exception e)
+        {
+            LOG.debug(e.getMessage());
+            throw new NotFoundException("Update Order with Id " + id + " failed");
+        }
+    }
 }
