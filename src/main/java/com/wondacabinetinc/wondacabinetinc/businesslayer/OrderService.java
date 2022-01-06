@@ -12,4 +12,6 @@ public interface OrderService {
     public Optional<Order> getOrderDetails(Integer id);
 
     public Order addOrder(Order order);
+
+    public List<Order> getNotCancelledOrders();
 }

@@ -34,6 +34,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> getNotCancelledOrders() {
+        return orderRepository.findByOrderStatusIsNot("Cancelled");
+    }
+
+    @Override
     public Optional<Order> getOrderDetails(Integer id) {
         try{
             Optional<Order> order = orderRepository.findById(id);
@@ -44,6 +49,7 @@ public class OrderServiceImpl implements OrderService {
             throw new NotFoundException("Order with Id: " + id + " not found");
         }
     }
+
 
     @Override
     public Order addOrder(Order order) {
