@@ -53,4 +53,12 @@ public class OrderResource {
     }
 
 
+    @PutMapping("/{orderId}")
+    @ResponseBody
+    @CrossOrigin(origins = "*")
+    public Order updateOrder(@PathVariable("orderId") int orderId, @RequestBody Order order){
+        return orderService.updateOrder(orderId, order);
+    }
+
+
 }
