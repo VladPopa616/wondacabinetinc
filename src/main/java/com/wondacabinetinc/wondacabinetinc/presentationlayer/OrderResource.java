@@ -37,6 +37,34 @@ public class OrderResource {
         return orders;
     }
 
+    @GetMapping("/active")
+    @ResponseBody
+    @CrossOrigin(origins = "*")
+    public List<Order> findNotCancelled(){
+        List<Order> orders = new ArrayList<>();
+        Iterable<Order> allOrders = orderService.getNotCancelledOrders();
+
+        for(Order order : allOrders){
+            orders.add(order);
+        }
+
+        return orders;
+    }
+
+    @GetMapping("/cancelled")
+    @ResponseBody
+    @CrossOrigin(origins = "*")
+    public List<Order> findCancelled(){
+        List<Order> orders = new ArrayList<>();
+        Iterable<Order> allOrders = orderService.getCancelledOrders();
+
+        for(Order order : allOrders){
+            orders.add(order);
+        }
+
+        return orders;
+    }
+
     @GetMapping("/{orderId}")
     @ResponseBody
     @CrossOrigin(origins = "*")

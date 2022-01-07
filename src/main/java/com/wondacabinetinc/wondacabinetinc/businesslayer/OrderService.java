@@ -13,5 +13,9 @@ public interface OrderService {
 
     public Order addOrder(Order order);
 
+    public List<Order> getNotCancelledOrders();
+
+    public List<Order> getCancelledOrders();
+  
     public Order updateOrder(Integer id, Order order);
 }
