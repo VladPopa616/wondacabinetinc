@@ -185,4 +185,22 @@ public class OrderServiceTest {
         assertEquals(receivedOrder.getHandleType(), newOrder.getHandleType());
 
     }
+
+    @DisplayName("Update Order should return not found when id is not found")
+    @Test
+    public void update_order_should_return_not_found_for_non_existing_id(){
+        int orderId = 100;
+        String expectedMsg = "Order with Id: " + orderId + " not found";
+
+        Order newOrder = new Order(1, "Received",(long)555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob");
+
+        when(orderRepository.findById(Mockito.anyInt())).thenThrow(new NotFoundException());
+
+        try{
+            orderService.updateOrder(orderId, newOrder);
+        }
+        catch(Exception e){
+            assertEquals(e.getMessage(), expectedMsg);
+        }
+    }
 }
