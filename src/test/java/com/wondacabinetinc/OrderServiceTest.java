@@ -29,6 +29,7 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.samePropertyValuesAs;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -101,7 +102,7 @@ public class OrderServiceTest {
 
         String expectedMsg = "Error adding Order, missing inputs";
 
-        when(orderRepository.save(Mockito.any(Order.class))).thenThrow(new NotFoundException("Error adding Order, missing inputs"));
+        when(orderRepository.save(any(Order.class))).thenThrow(new NotFoundException("Error adding Order, missing inputs"));
 
         try{
             orderService.addOrder(order);
@@ -121,7 +122,7 @@ public class OrderServiceTest {
 
         String expectedMsg = "Duplicate Key, orderId: " + order.getOrderId();
 
-        when(orderRepository.save(Mockito.any(Order.class))).thenThrow(new DuplicateKeyException("Duplicate Key, orderId: " + order.getOrderId()));
+        when(orderRepository.save(any(Order.class))).thenThrow(new DuplicateKeyException("Duplicate Key, orderId: " + order.getOrderId()));
 
         try{
             orderService.addOrder(order);
@@ -161,5 +162,27 @@ public class OrderServiceTest {
         catch(NotFoundException e){
             assertEquals(e.getMessage(), expectedMsg);
         }
+    }
+
+    @DisplayName("Update order")
+    @Test
+    public void update_order(){
+        Order newOrder = new Order(1, "Received",(long)555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob");
+        when(orderRepository.findById(1)).thenReturn(Optional.of(newOrder));
+
+        Optional<Order> retrieved = orderRepository.findById(1);
+        Order receivedOrder = retrieved.get();
+
+        orderService.updateOrder(1,newOrder);
+
+        assertEquals(receivedOrder.getOrderId(), newOrder.getOrderId());
+        assertEquals(receivedOrder.getOrderStatus(), newOrder.getOrderStatus());
+        assertEquals(receivedOrder.getTrackingNo(), newOrder.getTrackingNo());
+        assertEquals(receivedOrder.getDesign(), newOrder.getDesign());
+        assertEquals(receivedOrder.getCabinetType(), newOrder.getCabinetType());
+        assertEquals(receivedOrder.getColor(), newOrder.getColor());
+        assertEquals(receivedOrder.getMaterial(), newOrder.getMaterial());
+        assertEquals(receivedOrder.getHandleType(), newOrder.getHandleType());
+
     }
 }
