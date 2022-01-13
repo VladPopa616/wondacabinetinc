@@ -88,5 +88,12 @@ public class OrderResource {
         return orderService.updateOrder(orderId, order);
     }
 
+//    @PutMapping("/cancel/{orderId}")
+//    @ResponseBody
+//    @CrossOrigin(origins = "*")
+//    public Order updateOrderStatusToCancel(@PathVariable("orderId") int orderId){
+//        return orderService.updateOrderStatusToCancelled(orderId);
+//    }
+
 
 }
