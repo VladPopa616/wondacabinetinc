@@ -14,17 +14,18 @@ public class Role {
     @Column(name = "role_id")
     private Integer roleId;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "role_name")
-    private String roleName;
+    private EnumRoles roleName;
 
     public Role() {
     }
 
-    public Role(String roleName) {
+    public Role(EnumRoles roleName) {
         this.roleName = roleName;
     }
 
-    public Role(Integer roleId, String roleName) {
+    public Role(Integer roleId, EnumRoles roleName) {
         this.roleId = roleId;
         this.roleName = roleName;
     }
@@ -37,11 +38,11 @@ public class Role {
         this.roleId = roleId;
     }
 
-    public String getRoleName() {
+    public EnumRoles getRoleName() {
         return roleName;
     }
 
-    public void setRoleName(String roleName) {
+    public void setRoleName(EnumRoles roleName) {
         this.roleName = roleName;
     }
 }
