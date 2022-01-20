@@ -75,11 +75,11 @@ public class Employee {
         this.roles = roles;
     }
 
-    public Integer getAccountId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setAccountId(Integer accountId) {
+    public void setId(Integer accountId) {
         this.id = accountId;
     }
 

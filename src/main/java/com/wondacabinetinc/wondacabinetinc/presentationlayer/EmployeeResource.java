@@ -15,13 +15,14 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/employees")
+@RequestMapping("/employees")
 public class EmployeeResource {
     @Autowired
     EmployeeService employeeService;
 
     @GetMapping("/all")
     @CrossOrigin
+    @ResponseBody
     @PreAuthorize("hasRole('EMPLOYEE')")
     public List<EmployeeDTO> getAllEmployeesDTO(){
         return employeeService.getAllEmployeesDTO();
@@ -29,6 +30,7 @@ public class EmployeeResource {
 
     @GetMapping("/{id}")
     @CrossOrigin
+    @ResponseBody
     @PreAuthorize("hasRole('EMPLOYEE')")
     public EmployeeDTO findEmployee(@PathVariable Integer id) throws NotFoundException {
         return employeeService.getEmployeeDTOById(id);
@@ -36,6 +38,7 @@ public class EmployeeResource {
 
     @GetMapping("/password")
     @CrossOrigin
+    @ResponseBody
     @PreAuthorize("hasRole('EMPLOYEE')")
     public String generatePassword(){
         CharacterRule digits = new CharacterRule(EnglishCharacterData.Digit);
