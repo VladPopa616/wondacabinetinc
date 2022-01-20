@@ -3,11 +3,18 @@ package com.wondacabinetinc.wondacabinetinc.datalayer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Table(name = "employees")
+@Table(name = "employees",
+uniqueConstraints = {
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email")
+})
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Employee {
     @Id
@@ -15,19 +22,42 @@ public class Employee {
     @Column(name = "account_id")
     private Integer accountId;
 
+    @NotBlank
+    @Size(max = 50)
     @Column(name = "username")
     private String username;
 
+    @NotBlank
+    @Size(max = 50)
     @Column(name = "email")
+    @Email
     private String email;
 
+    @NotBlank
+    @Size(max = 50)
     @Column(name = "password")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(	name = "roles",
+            joinColumns = @JoinColumn(name = "account_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles = new ArrayList<>();
 
     public Employee() {
+    }
+
+    public Employee(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public Employee(Integer accountId, String username, String email, String password) {
+        this.accountId = accountId;
+        this.username = username;
+        this.email = email;
+        this.password = password;
     }
 
     public Employee(String username, String email, String password, Collection<Role> roles) {
