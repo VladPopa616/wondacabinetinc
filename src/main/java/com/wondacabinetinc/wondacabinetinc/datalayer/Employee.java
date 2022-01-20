@@ -19,8 +19,8 @@ uniqueConstraints = {
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "account_id")
-    private Integer accountId;
+    @Column(name = "id")
+    private Integer id;
 
     @NotBlank
     @Size(max = 50)
@@ -54,7 +54,7 @@ public class Employee {
     }
 
     public Employee(Integer accountId, String username, String email, String password) {
-        this.accountId = accountId;
+        this.id = accountId;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -68,7 +68,7 @@ public class Employee {
     }
 
     public Employee(Integer accountId, String username, String email, String password, Collection<Role> roles) {
-        this.accountId = accountId;
+        this.id = accountId;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -76,11 +76,11 @@ public class Employee {
     }
 
     public Integer getAccountId() {
-        return accountId;
+        return id;
     }
 
     public void setAccountId(Integer accountId) {
-        this.accountId = accountId;
+        this.id = accountId;
     }
 
     public String getUsername() {
