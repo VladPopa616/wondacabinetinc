@@ -1,32 +1,30 @@
 package com.wondacabinetinc.wondacabinetinc.datalayer;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class EmployeeDTO {
-    private Integer id;
+    private Long uid;
     private String username;
     private String email;
     private String password;
     private Collection<Role> roles = new ArrayList<>();
 
-    public EmployeeDTO() {
+    public Long getUId() {
+        return uid;
     }
 
-    public EmployeeDTO(Integer id, String username, String email, String password, Collection<Role> roles) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUId(Long uid) {
+        this.uid = uid;
     }
 
     public String getUsername() {

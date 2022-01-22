@@ -3,8 +3,10 @@ import com.wondacabinetinc.wondacabinetinc.businesslayer.OrderService;
 import com.wondacabinetinc.wondacabinetinc.datalayer.Order;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +28,7 @@ public class OrderResource {
     @GetMapping
     @ResponseBody
     @CrossOrigin(origins = "*")
+    @PreAuthorize("hasRole('EMPLOYEE')")
     public List<Order> findAllOrders(){
         List<Order> orders = new ArrayList<>();
         Iterable<Order> allOrders = orderService.getAllOrders();
@@ -84,6 +87,7 @@ public class OrderResource {
     @PutMapping("/{orderId}")
     @ResponseBody
     @CrossOrigin(origins = "*")
+    @PreAuthorize("hasRole('EMPLOYEE')")
     public Order updateOrder(@PathVariable("orderId") int orderId, @RequestBody Order order){
         return orderService.updateOrder(orderId, order);
     }

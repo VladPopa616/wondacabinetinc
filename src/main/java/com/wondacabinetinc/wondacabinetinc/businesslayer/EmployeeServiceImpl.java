@@ -30,12 +30,12 @@ public class EmployeeServiceImpl implements EmployeeService{
         return employeeMapper.employeeListToEmployeeDTOList(getAllEmployees());
     }
 
-    public Employee getEmployeeById(Integer id) throws NotFoundException{
-        return employeeRepository.findById(id).orElseThrow(() -> new NotFoundException("No employee found for id: " + id));
+    public Employee getEmployeeByUid(long uid) throws NotFoundException{
+        return employeeRepository.findByUid(uid).orElseThrow(() -> new NotFoundException("No user was found for id " + uid));
     }
 
     @Override
-    public EmployeeDTO getEmployeeDTOById(Integer id) throws NotFoundException {
-        return employeeMapper.employeeToEmployeeDTO(getEmployeeById(id));
+    public EmployeeDTO getEmployeeDTOById(long uid) throws NotFoundException {
+        return employeeMapper.employeeToEmployeeDTO(getEmployeeByUid(uid));
     }
 }

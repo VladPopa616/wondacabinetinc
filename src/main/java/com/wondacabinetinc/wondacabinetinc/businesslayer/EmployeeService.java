@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface EmployeeService {
     List<EmployeeDTO> getAllEmployeesDTO();
-    EmployeeDTO getEmployeeDTOById(Integer id) throws NotFoundException;
+    EmployeeDTO getEmployeeDTOById(long uid) throws NotFoundException;
 }

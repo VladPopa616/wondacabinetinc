@@ -41,7 +41,7 @@ public class AuthController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @Autowired
+
     TokenUtils tokenUtils;
 
     @Autowired
@@ -76,7 +76,7 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email already in use"));
         }
 
-        Employee employee = new Employee(signUpRequest.getUsername(), signUpRequest.getEmail(), passwordEncoder.encode(signUpRequest.getPassword()));
+        EmployeeDTO employee = new Employee(signUpRequest.getUsername(), signUpRequest.getEmail(), passwordEncoder.encode(signUpRequest.getPassword()));
 
         Collection<String> strRoles = signUpRequest.getRole();
         Collection<Role> roles = new ArrayList<>();
@@ -101,7 +101,7 @@ public class AuthController {
         }
 
         employee.setRoles(roles);
-        employeeRepository.save(employee);
+        employeeRepository.save(employeeMapper.employeeDTOtoEmployee(employee));
         return ResponseEntity.ok(new MessageResponse("User registered Successfully"));
     }
 }

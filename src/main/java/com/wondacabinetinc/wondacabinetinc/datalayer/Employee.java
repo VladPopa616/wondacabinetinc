@@ -1,6 +1,7 @@
 package com.wondacabinetinc.wondacabinetinc.datalayer;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 @Entity
 @Table(name = "employees",
@@ -16,11 +18,16 @@ uniqueConstraints = {
         @UniqueConstraint(columnNames = "email")
 })
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-public class Employee {
+public class Employee extends EmployeeDTO{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @UniqueElements(groups = Employee.class)
+    @Column(name = "uid")
+    private Long uid;
 
     @NotBlank
     @Size(max = 50)
@@ -40,8 +47,8 @@ public class Employee {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(	name = "roles",
-            joinColumns = @JoinColumn(name = "account_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "uid"))
     private Collection<Role> roles = new ArrayList<>();
 
     public Employee() {
@@ -53,22 +60,25 @@ public class Employee {
         this.password = password;
     }
 
-    public Employee(Integer accountId, String username, String email, String password) {
+    public Employee(Integer accountId, Long uid, String username, String email, String password) {
         this.id = accountId;
+        this.uid = uid;
         this.username = username;
         this.email = email;
         this.password = password;
     }
 
-    public Employee(String username, String email, String password, Collection<Role> roles) {
+    public Employee(Long uid,String username, String email, String password, Collection<Role> roles) {
+        this.uid = uid;
         this.username = username;
         this.email = email;
         this.password = password;
         this.roles = roles;
     }
 
-    public Employee(Integer accountId, String username, String email, String password, Collection<Role> roles) {
+    public Employee(Integer accountId,  Long uid, String username, String email, String password, Collection<Role> roles) {
         this.id = accountId;
+        this.uid = uid;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -113,5 +123,15 @@ public class Employee {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public Long getUid() {
+        return uid;
+    }
+
+    public void setUid(Long uid) {
+        Random rand = new Random();
+        long l = rand.nextInt(99999);
+        this.uid = l;
     }
 }

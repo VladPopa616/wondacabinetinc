@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AuthFilter extends OncePerRequestFilter {
-    @Autowired
+
     private TokenUtils tokenUtils;
 
     @Autowired
