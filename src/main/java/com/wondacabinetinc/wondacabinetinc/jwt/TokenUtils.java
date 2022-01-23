@@ -5,26 +5,31 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@Component
 public class TokenUtils {
     private static final Logger LOG = LoggerFactory.getLogger(TokenUtils.class);
 
-    @Value("${wondacabinetinc.app.jwtSecret}")
+    @Value("${jwt.secret}")
     private String jwtSecret;
 
-    @Value("${wondacabinetinc.app.jwtExpiration}")
+    @Value("${jwt.expiration}")
     private int jwtExpiration;
 
     public String generateToken(Authentication authentication){
-        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+        Authentication userPrincipal = SecurityContextHolder.getContext().getAuthentication();
+        String username = userPrincipal.getName();
+
 
         return Jwts.builder()
-                .setSubject(userPrincipal.getUsername())
+                .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpiration))
-                .signWith(SignatureAlgorithm.HS256, jwtSecret)
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
 

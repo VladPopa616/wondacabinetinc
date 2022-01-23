@@ -2,10 +2,7 @@ package com.wondacabinetinc.wondacabinetinc.presentationlayer;
 
 import com.wondacabinetinc.wondacabinetinc.businesslayer.EmployeeMapper;
 import com.wondacabinetinc.wondacabinetinc.datalayer.*;
-import com.wondacabinetinc.wondacabinetinc.jwt.JWTResponse;
-import com.wondacabinetinc.wondacabinetinc.jwt.MessageResponse;
-import com.wondacabinetinc.wondacabinetinc.jwt.TokenUtils;
-import com.wondacabinetinc.wondacabinetinc.jwt.UserDetailsImpl;
+import com.wondacabinetinc.wondacabinetinc.jwt.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +30,9 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
+    UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
     EmployeeRepository employeeRepository;
 
     @Autowired
@@ -41,8 +42,10 @@ public class AuthController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-
+    @Autowired
     TokenUtils tokenUtils;
+
+    //TokenUtils tokenUtils = new TokenUtils();
 
     @Autowired
     EmployeeMapper employeeMapper;
@@ -57,11 +60,13 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenUtils.generateToken(authentication);
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(name);
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority).collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JWTResponse(jwt, userDetails.getId() ,userDetails.getUsername(), userDetails.getEmail(), roles));
+        return ResponseEntity.ok(new JWTResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
     }
 
     @PostMapping("/signup")

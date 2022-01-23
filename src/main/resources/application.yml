@@ -3,6 +3,9 @@ server.error.include-message: always
 
 spring.jpa.hibernate.ddl-auto: update
 
+jwt.expiration: 1800000
+jwt.secret: wc1S3CR3TK3YB4S364TH4TI2SUp3RL0NG
+
 spring.datasource:
   url: jdbc:mysql://localhost:3306/WondaCabinetIncDb
   username: user
