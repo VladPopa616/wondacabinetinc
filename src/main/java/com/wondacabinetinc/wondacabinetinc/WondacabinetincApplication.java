@@ -1,14 +1,19 @@
 package com.wondacabinetinc.wondacabinetinc;
 
+import com.wondacabinetinc.wondacabinetinc.Mail.MailSenderServiceImp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.context.event.EventListener;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import javax.mail.MessagingException;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -19,6 +24,9 @@ public class WondacabinetincApplication {
 
 		SpringApplication.run(WondacabinetincApplication.class, args);
 	}
+//
+//	@Autowired
+//	private MailSenderServiceImp service;
 
 	@Bean
 	public CorsFilter corsFilter() {
