@@ -15,7 +15,7 @@ public class MailSenderServiceImp implements  MailSenderService{
     public void sendSimpleEmail(String toEmail, String body, String subject ){
         SimpleMailMessage message = new SimpleMailMessage();
 
-        message.setFrom("wondacabinetinctestemail@gmail.com");
+        message.setFrom("noreply.wondacabinetinc@gmail.com");
         message.setTo(toEmail);
         message.setText(body);
         message.setSubject(subject);
