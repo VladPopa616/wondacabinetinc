@@ -12,7 +12,7 @@ import java.util.List;
 public interface EmployeeMapper {
     @Mappings(
             {
-                    @Mapping(target = "id", ignore = true),
+                    @Mapping(target = "uid", ignore = true),
             }
     )
     Employee employeeDTOtoEmployee(EmployeeDTO employeeDTO);

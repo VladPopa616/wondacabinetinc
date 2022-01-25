@@ -6,16 +6,15 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "roles")
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+//@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
-    private Integer roleId;
+    private Integer id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role_name")
+    @Column(length = 20)
     private EnumRoles roleName;
 
     public Role() {
@@ -26,16 +25,16 @@ public class Role {
     }
 
     public Role(Integer roleId, EnumRoles roleName) {
-        this.roleId = roleId;
+        this.id = roleId;
         this.roleName = roleName;
     }
 
     public Integer getRoleId() {
-        return roleId;
+        return id;
     }
 
     public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+        this.id = roleId;
     }
 
     public EnumRoles getRoleName() {
