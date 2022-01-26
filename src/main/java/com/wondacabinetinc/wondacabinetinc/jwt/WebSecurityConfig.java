@@ -50,6 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         final DaoAuthenticationConfigurer dao = new DaoAuthenticationConfigurer<>(username -> userDetailsService.loadUserByUsername(username));
         dao.passwordEncoder(passwordEncoder());
 
+
         final InMemoryUserDetailsManagerConfigurer inMem = new InMemoryUserDetailsManagerConfigurer();
         inMem.withUser(DEFAULT_EMPLOYEE_USERNAME).password("{noop}" + DEFAULT_EMPLOYEE_PASSWORD)
                         .roles("EMPLOYEE");

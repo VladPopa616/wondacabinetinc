@@ -3,6 +3,7 @@ package com.wondacabinetinc.wondacabinetinc.presentationlayer;
 import com.wondacabinetinc.wondacabinetinc.businesslayer.EmployeeMapper;
 import com.wondacabinetinc.wondacabinetinc.datalayer.*;
 import com.wondacabinetinc.wondacabinetinc.jwt.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/auth")
+@Slf4j
 public class AuthController {
 
     @Autowired
@@ -62,10 +65,12 @@ public class AuthController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(name);
+        UserDetailsImpl userDetails = UserDetailsImpl.build(employeeRepository.findByUsername(name).orElseThrow((()-> new UsernameNotFoundException("Username not found"))));
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority).collect(Collectors.toList());
 
+        log.info("Password returned: " + userDetails.getPassword());
+        System.out.println(userDetails.getPassword());
         return ResponseEntity.ok(new JWTResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
     }
 

@@ -32,7 +32,7 @@ public class Employee extends EmployeeDTO{
     private String email;
 
     @NotBlank
-    @Size(max = 150)
+    @Size(max = 200)
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
