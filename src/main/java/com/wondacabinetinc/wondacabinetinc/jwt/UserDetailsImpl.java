@@ -3,6 +3,7 @@ package com.wondacabinetinc.wondacabinetinc.jwt;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wondacabinetinc.wondacabinetinc.datalayer.Employee;
 import com.wondacabinetinc.wondacabinetinc.datalayer.EmployeeDTO;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

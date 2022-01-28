@@ -21,12 +21,11 @@ public class TokenUtils {
     private int jwtExpiration;
 
     public String generateToken(Authentication authentication){
-        Authentication userPrincipal = SecurityContextHolder.getContext().getAuthentication();
-        String username = userPrincipal.getName();
 
+        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpiration))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
@@ -40,6 +39,7 @@ public class TokenUtils {
     public Boolean validateToken(String authToken){
         try{
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+            return true;
         }
         catch(SignatureException e){
             LOG.error("Invalid Signature: {}", e.getMessage());

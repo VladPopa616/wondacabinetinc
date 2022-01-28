@@ -23,7 +23,7 @@ public class EmployeeResource {
     @GetMapping("/all")
     @CrossOrigin
     @ResponseBody
-    @PreAuthorize("hasRole('EMPLOYEE')")
+    //@PreAuthorize("hasRole('EMPLOYEE')")
     public List<EmployeeDTO> getAllEmployeesDTO(){
         return employeeService.getAllEmployeesDTO();
     }
@@ -31,7 +31,7 @@ public class EmployeeResource {
     @GetMapping("/{id}")
     @CrossOrigin
     @ResponseBody
-    @PreAuthorize("hasRole('EMPLOYEE')")
+   // @PreAuthorize("hasRole('EMPLOYEE')")
     public EmployeeDTO findEmployee(@PathVariable Integer id) throws NotFoundException {
         return employeeService.getEmployeeDTOById(id);
     }

@@ -27,13 +27,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final EmployeeRepository employeeRepository;
-
-    @Value("${default-employee.username:admin}")
-    private String DEFAULT_EMPLOYEE_USERNAME;
-    @Value("${default-employee.password:admin}")
-    private String DEFAULT_EMPLOYEE_PASSWORD;
-
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
@@ -47,16 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        final DaoAuthenticationConfigurer dao = new DaoAuthenticationConfigurer<>(username -> userDetailsService.loadUserByUsername(username));
-        dao.passwordEncoder(passwordEncoder());
-
-
-        final InMemoryUserDetailsManagerConfigurer inMem = new InMemoryUserDetailsManagerConfigurer();
-        inMem.withUser(DEFAULT_EMPLOYEE_USERNAME).password("{noop}" + DEFAULT_EMPLOYEE_PASSWORD)
-                        .roles("EMPLOYEE");
-
-        authenticationManagerBuilder.apply(inMem);
-        authenticationManagerBuilder.apply(dao);
+        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
@@ -76,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/auth/**").permitAll()
-                .antMatchers("/test/**").permitAll()
+                .antMatchers("/users/**").hasAnyAuthority("ROLE_EMPLOYEE")
                 .anyRequest().authenticated();
         http.addFilterBefore(authFilter(), UsernamePasswordAuthenticationFilter.class);
     }

@@ -28,7 +28,7 @@ public class OrderResource {
     @GetMapping
     @ResponseBody
     @CrossOrigin(origins = "*")
-    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PreAuthorize("hasAnyAuthority('ROLE_EMPLOYEE')")
     public List<Order> findAllOrders(){
         List<Order> orders = new ArrayList<>();
         Iterable<Order> allOrders = orderService.getAllOrders();
@@ -71,6 +71,7 @@ public class OrderResource {
     @GetMapping("/{orderId}")
     @ResponseBody
     @CrossOrigin(origins = "*")
+    @PreAuthorize("hasAnyAuthority('ROLE_EMPLOYEE', 'ROLE_CUSTOMER')")
     public Optional<Order> getOrderDetails(@PathVariable("orderId") int orderId){
         return orderService.getOrderDetails(orderId);
     }
@@ -79,6 +80,7 @@ public class OrderResource {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     @CrossOrigin(origins = "*")
+    @PreAuthorize("hasAnyAuthority('ROLE_EMPLOYEE', 'ROLE_CUSTOMER')")
     public Order addNewOrder(@RequestBody Order order){
         return orderService.addOrder(order);
     }
@@ -87,7 +89,7 @@ public class OrderResource {
     @PutMapping("/{orderId}")
     @ResponseBody
     @CrossOrigin(origins = "*")
-    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PreAuthorize("hasAuthority('ROLE_EMPLOYEE')")
     public Order updateOrder(@PathVariable("orderId") int orderId, @RequestBody Order order){
         return orderService.updateOrder(orderId, order);
     }
