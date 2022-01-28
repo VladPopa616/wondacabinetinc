@@ -1,5 +1,6 @@
 package com.wondacabinetinc.wondacabinetinc.Mail;
 
+import com.wondacabinetinc.wondacabinetinc.datalayer.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -36,7 +37,7 @@ public class MailSenderServiceImp implements  MailSenderService{
         MimeMessageHelper mimeMessageHelper
                 = new MimeMessageHelper(mimeMessage, true);
 
-        mimeMessageHelper.setFrom("spring.email.from@gmail.com");
+        mimeMessageHelper.setFrom("noreply.wondacabinetinc@gmail.com");
         mimeMessageHelper.setTo(toEmail);
         mimeMessageHelper.setText(body);
         mimeMessageHelper.setSubject(subject);
@@ -48,5 +49,36 @@ public class MailSenderServiceImp implements  MailSenderService{
                 fileSystem);
 
         mailsender.send(mimeMessage);
+    }
+
+    public String sendUpdateEmailWithAttachment(String toEmail, Order order) throws MessagingException {
+        try{
+            MimeMessage mimeMessage = mailsender.createMimeMessage();
+
+            MimeMessageHelper mimeMessageHelper
+                    = new MimeMessageHelper(mimeMessage, true);
+
+            String body = "";
+            String subject = "UPDATE - CABINET: " + order.getCabinetType();
+            String attachment = order.getDesign();
+
+            mimeMessageHelper.setFrom("noreply.wondacabinetinc@gmail.com");
+            mimeMessageHelper.setTo(toEmail);
+            mimeMessageHelper.setText(body);
+            mimeMessageHelper.setSubject(subject);
+
+            FileSystemResource fileSystem
+                    = new FileSystemResource(new File(attachment));
+
+            mimeMessageHelper.addAttachment(fileSystem.getFilename(),
+                    fileSystem);
+
+            mailsender.send(mimeMessage);
+            return "Email sent";
+
+        }
+        catch(MessagingException e) {
+            throw new MessagingException();
+        }
     }
 }
