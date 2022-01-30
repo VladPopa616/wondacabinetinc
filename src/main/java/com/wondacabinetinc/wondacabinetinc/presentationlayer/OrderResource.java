@@ -1,4 +1,5 @@
 package com.wondacabinetinc.wondacabinetinc.presentationlayer;
+import com.wondacabinetinc.wondacabinetinc.Mail.MailSenderService;
 import com.wondacabinetinc.wondacabinetinc.businesslayer.OrderService;
 import com.wondacabinetinc.wondacabinetinc.datalayer.Order;
 import lombok.extern.slf4j.Slf4j;
@@ -18,11 +19,13 @@ import java.util.Optional;
 public class OrderResource {
     private final OrderService orderService;
 
+    private final MailSenderService mailService;
 
 
-    public OrderResource(OrderService orderService) {
+
+    public OrderResource(OrderService orderService, MailSenderService mailService) {
         this.orderService = orderService;
-
+        this.mailService = mailService;
     }
 
     @GetMapping
@@ -91,6 +94,7 @@ public class OrderResource {
     @CrossOrigin(origins = "*")
     @PreAuthorize("hasAuthority('ROLE_EMPLOYEE')")
     public Order updateOrder(@PathVariable("orderId") int orderId, @RequestBody Order order){
+
         return orderService.updateOrder(orderId, order);
     }
 
