@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 @EnableAutoConfiguration
-@SpringBootConfiguration
 @ContextConfiguration
 public class MailingServiceTest {
 
