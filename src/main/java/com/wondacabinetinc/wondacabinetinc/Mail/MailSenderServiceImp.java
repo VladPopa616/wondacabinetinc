@@ -58,7 +58,7 @@ public class MailSenderServiceImp implements  MailSenderService{
             MimeMessageHelper mimeMessageHelper
                     = new MimeMessageHelper(mimeMessage, true);
 
-            String body = "";
+            String body = "Here is a confirmation of your updated order: \nOrder Name: " + order.getCabinetType() + "\nOrder Status: " + order.getOrderStatus() + "\nMaterial: " + order.getMaterial() + "\nHandle Type: " + order.getHandleType() + "\nColor: " + order.getColor() + "\nIf there are any mistakes, please contact an employee.\nThank you for choosing Wonda Cabinet Inc.";
             String subject = "UPDATE - CABINET: " + order.getCabinetType();
             String attachment = order.getDesign();
 
@@ -67,11 +67,11 @@ public class MailSenderServiceImp implements  MailSenderService{
             mimeMessageHelper.setText(body);
             mimeMessageHelper.setSubject(subject);
 
-            FileSystemResource fileSystem
-                    = new FileSystemResource(new File(attachment));
-
-            mimeMessageHelper.addAttachment(fileSystem.getFilename(),
-                    fileSystem);
+//            FileSystemResource fileSystem
+//                    = new FileSystemResource(new File(attachment));
+//
+//            mimeMessageHelper.addAttachment(fileSystem.getFilename(),
+//                    fileSystem);
 
             mailsender.send(mimeMessage);
             return "Email sent";

@@ -1,6 +1,7 @@
 package com.wondacabinetinc.wondacabinetinc.businesslayer;
 
 
+import com.wondacabinetinc.wondacabinetinc.Mail.MailSenderService;
 import com.wondacabinetinc.wondacabinetinc.datalayer.Order;
 import com.wondacabinetinc.wondacabinetinc.datalayer.OrderRepository;
 import com.wondacabinetinc.wondacabinetinc.utils.exceptions.InvalidInputException;
@@ -20,11 +21,14 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
 
+    private final MailSenderService mailService;
 
 
-    public OrderServiceImpl(OrderRepository orderRepository) {
+
+    public OrderServiceImpl(OrderRepository orderRepository, MailSenderService mailService) {
         this.orderRepository = orderRepository;
 
+        this.mailService = mailService;
     }
 
     @Override
@@ -84,6 +88,7 @@ public class OrderServiceImpl implements OrderService {
             foundOrder.setHandleType(order.getHandleType());
 
             LOG.debug("Order with Id {} updated", id);
+            mailService.sendUpdateEmailWithAttachment("wondacabinetinctestemail@gmail.com", order);
             return orderRepository.save(foundOrder);
 
         }
