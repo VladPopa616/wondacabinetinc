@@ -28,7 +28,7 @@ public class MailingServiceTest {
     @MockBean
     MailSenderService mailSenderService;
 
-    Order order = new Order(1, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob");
+    Order order = new Order(1, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com");
 
     @BeforeEach
     void setUp() throws MessagingException {
