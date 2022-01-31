@@ -13,4 +13,6 @@ public interface MailSenderService {
     public void sendEmailWithAttachment(String toEmail, String body, String subject, String attachment ) throws MessagingException;
 
     public String sendUpdateEmailWithAttachment(String toEmail, Order order) throws MessagingException;
+
+    public String sendCreateEmailWithAttachment(String toEmail, Order order) throws MessagingException;
 }

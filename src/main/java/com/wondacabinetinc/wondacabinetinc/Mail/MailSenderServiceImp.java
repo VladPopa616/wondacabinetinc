@@ -59,8 +59,17 @@ public class MailSenderServiceImp implements  MailSenderService{
             MimeMessageHelper mimeMessageHelper
                     = new MimeMessageHelper(mimeMessage, true);
 
-            String body = "Here is a confirmation of your updated order: \nOrder Name: " + order.getCabinetType() + "\nOrder Status: " + order.getOrderStatus() + "\nMaterial: " + order.getMaterial() + "\nHandle Type: " + order.getHandleType() + "\nColor: " + order.getColor() + "\nIf there are any mistakes, please contact an employee.\nThank you for choosing Wonda Cabinet Inc.";
-            String subject = "UPDATE - CABINET: " + order.getCabinetType();
+            String body = "Here is a confirmation of your updated order: " +
+                    "\nOrder Name: " + order.getCabinetType() +
+                    "\nTracking Number: " + order.getTrackingNo() +
+                    "\nOrder Status: " + order.getOrderStatus() +
+                    "\nMaterial: " + order.getMaterial() +
+                    "\nHandle Type: " + order.getHandleType() +
+                    "\nColor: " + order.getColor() +
+                    "\nIf there are any mistakes, please contact an employee." +
+                    "\nThank you for choosing Wonda Cabinet Inc.";
+
+            String subject = "UPDATE ORDER - CABINET: " + order.getCabinetType();
             String attachment = order.getDesign();
 
             mimeMessageHelper.setFrom("noreply.wondacabinetinc@gmail.com");
@@ -79,7 +88,48 @@ public class MailSenderServiceImp implements  MailSenderService{
 
         }
         catch(MessagingException e) {
-            throw new MessagingException();
+            throw new MessagingException("Failed to send email");
+        }
+    }
+
+    @Override
+    public String sendCreateEmailWithAttachment(String toEmail, Order order) throws MessagingException {
+        try{
+            MimeMessage mimeMessage = mailsender.createMimeMessage();
+
+            MimeMessageHelper mimeMessageHelper
+                    = new MimeMessageHelper(mimeMessage, true);
+
+            String body = "Here is a confirmation of your updated order: " +
+                    "\nOrder Name: " + order.getCabinetType() +
+                    "\nTracking Number: " + order.getTrackingNo() +
+                    "\nOrder Status: " + order.getOrderStatus() +
+                    "\nMaterial: " + order.getMaterial() +
+                    "\nHandle Type: " + order.getHandleType() +
+                    "\nColor: " + order.getColor() +
+                    "\nIf there are any mistakes, please contact an employee." +
+                    "\nThank you for choosing Wonda Cabinet Inc.";
+
+            String subject = "NEW ORDER - CABINET: " + order.getCabinetType();
+//            String attachment = order.getDesign();
+
+            mimeMessageHelper.setFrom("noreply.wondacabinetinc@gmail.com");
+            mimeMessageHelper.setTo(toEmail);
+            mimeMessageHelper.setText(body);
+            mimeMessageHelper.setSubject(subject);
+
+//            FileSystemResource fileSystem
+//                    = new FileSystemResource(new File(attachment));
+//
+//            mimeMessageHelper.addAttachment(fileSystem.getFilename(),
+//                    fileSystem);
+
+            mailsender.send(mimeMessage);
+            return "Email sent";
+
+        }
+        catch(MessagingException e) {
+            throw new MessagingException("Failed to send email");
         }
     }
 }
