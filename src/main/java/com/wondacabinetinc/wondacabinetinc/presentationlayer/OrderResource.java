@@ -106,6 +106,22 @@ public class OrderResource {
         return orderService.getOrderByEmail(email);
     }
 
+    @GetMapping("/email/cancelled/{email}")
+    @ResponseBody
+    @CrossOrigin(origins = "*")
+    @PreAuthorize("hasAnyAuthority('ROLE_EMPLOYEE', 'ROLE_CUSTOMER')")
+    public List<Order> getCancelledByEmail(@PathVariable String email){
+        return orderService.getCancelledByEmail(email);
+    }
+
+    @GetMapping("/email/active/{email}")
+    @ResponseBody
+    @CrossOrigin(origins = "*")
+    @PreAuthorize("hasAnyAuthority('ROLE_EMPLOYEE', 'ROLE_CUSTOMER')")
+    public List<Order> getNonCancelledByEmail(@PathVariable String email){
+        return orderService.getNonCancelledByEmail(email);
+    }
+
 //    @PutMapping("/cancel/{orderId}")
 //    @ResponseBody
 //    @CrossOrigin(origins = "*")
