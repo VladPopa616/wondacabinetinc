@@ -110,4 +110,19 @@ public class OrderServiceImpl implements OrderService {
             throw new NotFoundException("Update Order with Id " + id + " failed");
         }
     }
+
+    @Override
+    public List<Order> getOrderByEmail(String email) {
+        return orderRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<Order> getCancelledByEmail(String email) {
+        return orderRepository.findByEmailAndOrderStatusIs(email, "Cancelled");
+    }
+
+    @Override
+    public List<Order> getNonCancelledByEmail(String email) {
+        return orderRepository.findByEmailAndOrderStatusIsNot(email, "Cancelled");
+    }
 }

@@ -56,16 +56,16 @@ public class OrderServiceTest {
         int expected_length = 10;
 
         List<Order> orderList = new ArrayList<>();
-        orderList.add(new Order(1, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
-        orderList.add(new Order(2, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
-        orderList.add(new Order(3, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
-        orderList.add(new Order(4, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
-        orderList.add(new Order(5, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
-        orderList.add(new Order(6, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
-        orderList.add(new Order(7, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
-        orderList.add(new Order(8, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
-        orderList.add(new Order(9, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
-        orderList.add(new Order(10, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
+        orderList.add(new Order(1, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com"));
+        orderList.add(new Order(2, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com"));
+        orderList.add(new Order(3, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com"));
+        orderList.add(new Order(4, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com"));
+        orderList.add(new Order(5, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com"));
+        orderList.add(new Order(6, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com"));
+        orderList.add(new Order(7, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com"));
+        orderList.add(new Order(8, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com"));
+        orderList.add(new Order(9, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com"));
+        orderList.add(new Order(10, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com"));
 
         when(orderResource.findAllOrders()).thenReturn(orderList);
 
@@ -81,9 +81,9 @@ public class OrderServiceTest {
         int expected_length = 3;
 
         List<Order> orderList = new ArrayList<>();
-        orderList.add(new Order(1, "Cancelled",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
-        orderList.add(new Order(2, "Cancelled",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
-        orderList.add(new Order(3, "Cancelled",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
+        orderList.add(new Order(1, "Cancelled",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com"));
+        orderList.add(new Order(2, "Cancelled",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com"));
+        orderList.add(new Order(3, "Cancelled",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com"));
 
         when(orderService.getCancelledOrders()).thenReturn(orderList);
 
@@ -98,9 +98,9 @@ public class OrderServiceTest {
         int expected_length = 3;
 
         List<Order> orderList = new ArrayList<>();
-        orderList.add(new Order(1, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
-        orderList.add(new Order(2, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
-        orderList.add(new Order(3, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
+        orderList.add(new Order(1, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com"));
+        orderList.add(new Order(2, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com"));
+        orderList.add(new Order(3, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com"));
 
         when(orderService.getNotCancelledOrders()).thenReturn(orderList);
 
@@ -117,7 +117,7 @@ public class OrderServiceTest {
         Order order = new Order(orderId, "Done",
                 555555, "Design",
                 "Kitchen Cabinet","White",
-                "Birch", "Circle");
+                "Birch", "Circle", "vpopa18@gmail.com");
 
         when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
 
@@ -135,7 +135,7 @@ public class OrderServiceTest {
         Order order = new Order(null,"Done",
                 555555, "Design",
                 "Kitchen Cabinet","White",
-                "Birch", "Circle");
+                "Birch", "Circle", "vpopa18@gmail.com");
 
         String expectedMsg = "Error adding Order, missing inputs";
 
@@ -155,7 +155,7 @@ public class OrderServiceTest {
         Order order = new Order(1,null,
                 null, null,
                 null,null,
-                null, null);
+                null, null, null);
 
         String expectedMsg = "Duplicate Key, orderId: " + order.getOrderId();
 
@@ -175,7 +175,7 @@ public class OrderServiceTest {
         Order order = new Order(1, "Done",
                 555555, "Design",
                 "Kitchen Cabinet","White",
-                "Birch", "Circle");
+                "Birch", "Circle", "vpopa18@gmail.com");
 
         when(orderRepository.findById(1)).thenReturn(Optional.of(order));
 
@@ -204,7 +204,7 @@ public class OrderServiceTest {
     @DisplayName("Update order")
     @Test
     public void update_order(){
-        Order newOrder = new Order(1, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob");
+        Order newOrder = new Order(1, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com");
         when(orderRepository.findById(1)).thenReturn(Optional.of(newOrder));
 
         Optional<Order> retrieved = orderRepository.findById(1);
@@ -229,7 +229,7 @@ public class OrderServiceTest {
         int orderId = 100;
         String expectedMsg = "Order with Id: " + orderId + " not found";
 
-        Order newOrder = new Order(1, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob");
+        Order newOrder = new Order(1, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com");
 
         when(orderRepository.findById(Mockito.anyInt())).thenThrow(new NotFoundException());
 

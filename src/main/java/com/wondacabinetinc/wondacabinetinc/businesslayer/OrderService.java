@@ -18,4 +18,10 @@ public interface OrderService {
     public List<Order> getCancelledOrders();
 
     public Order updateOrder(Integer id, Order order);
+
+    public List<Order> getOrderByEmail(String email);
+
+    public List<Order> getCancelledByEmail(String email);
+
+    public List<Order> getNonCancelledByEmail(String email);
 }
