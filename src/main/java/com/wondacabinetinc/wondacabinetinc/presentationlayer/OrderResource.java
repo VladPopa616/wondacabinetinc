@@ -98,6 +98,14 @@ public class OrderResource {
         return orderService.updateOrder(orderId, order);
     }
 
+    @GetMapping("/email/{email}")
+    @ResponseBody
+    @CrossOrigin(origins = "*")
+    @PreAuthorize("hasAnyAuthority('ROLE_EMPLOYEE', 'ROLE_CUSTOMER')")
+    public List<Order> getOrdersByEmail(@PathVariable String email){
+        return orderService.getOrderByEmail(email);
+    }
+
 //    @PutMapping("/cancel/{orderId}")
 //    @ResponseBody
 //    @CrossOrigin(origins = "*")

@@ -110,4 +110,9 @@ public class OrderServiceImpl implements OrderService {
             throw new NotFoundException("Update Order with Id " + id + " failed");
         }
     }
+
+    @Override
+    public List<Order> getOrderByEmail(String email) {
+        return orderRepository.findByEmail(email);
+    }
 }

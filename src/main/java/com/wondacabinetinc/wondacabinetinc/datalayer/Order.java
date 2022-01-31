@@ -9,6 +9,7 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Random;
 
@@ -44,6 +45,10 @@ public class Order {
 
     @Column(name="handle_type")
     private String handleType;
+
+    @Column(name = "email")
+    @Email
+    private String email;
 
     public void setTrackingNo(Integer trackingNo) {
         Random rand = new Random();
@@ -117,5 +122,11 @@ public class Order {
         this.design = design;
     }
 
+    public String getEmail() {
+        return email;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

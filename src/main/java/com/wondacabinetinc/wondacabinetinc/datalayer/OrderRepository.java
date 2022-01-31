@@ -13,4 +13,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     List<Order> findByOrderStatusIsNot(String status);
 
     List<Order> findByOrderStatusIs(String cancelled);
+
+    List<Order> findByEmail(String email);
 }
