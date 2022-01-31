@@ -9,8 +9,11 @@ import com.wondacabinetinc.wondacabinetinc.utils.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
+import javax.mail.MessagingException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -70,6 +73,7 @@ public class OrderServiceImpl implements OrderService {
             order.setOrderStatus("Awaiting Order");
             order.setDesign("https://s2.q4cdn.com/498544986/files/doc_downloads/test.pdf");
             LOG.debug("Order Added: order with ID {} saved", order.getOrderId());
+            mailService.sendCreateEmailWithAttachment("wondacabinetinctestemail@gmail.com", order);
             return orderRepository.save(order);
         }
         catch(DuplicateKeyException e){
@@ -77,6 +81,8 @@ public class OrderServiceImpl implements OrderService {
         }
         catch(NullPointerException e){
             throw new NotFoundException("Error adding Order, missing inputs");
+        } catch (MessagingException e) {
+            throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to send mail");
         }
     }
 

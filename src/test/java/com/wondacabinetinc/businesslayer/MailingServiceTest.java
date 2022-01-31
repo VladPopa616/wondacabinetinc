@@ -33,6 +33,7 @@ public class MailingServiceTest {
     @BeforeEach
     void setUp() throws MessagingException {
         when(mailSenderService.sendUpdateEmailWithAttachment("test@test.com", order)).thenReturn("Email Sent");
+        when(mailSenderService.sendCreateEmailWithAttachment("test@test.com", order)).thenReturn("Email Sent");
     }
 
     @Test
@@ -42,4 +43,10 @@ public class MailingServiceTest {
         assertEquals(result, "Email Sent");
     }
 
+    @Test
+    @DisplayName("Send Create Email")
+    void send_create_email() throws MessagingException {
+        String result = mailSenderService.sendCreateEmailWithAttachment("test@test.com", order);
+        assertEquals(result, "Email Sent");
+    }
 }
