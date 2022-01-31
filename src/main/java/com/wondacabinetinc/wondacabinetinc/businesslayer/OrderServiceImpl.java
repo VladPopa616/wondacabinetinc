@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -63,6 +64,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order addOrder(Order order) {
         try{
+            Random rand = new Random();
+            order.setOrderId(rand.nextInt());
+            order.setTrackingNo(rand.nextInt());
+            order.setOrderStatus("Awaiting Order");
+            order.setDesign("https://s2.q4cdn.com/498544986/files/doc_downloads/test.pdf");
             LOG.debug("Order Added: order with ID {} saved", order.getOrderId());
             return orderRepository.save(order);
         }
