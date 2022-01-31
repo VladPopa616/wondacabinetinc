@@ -2,27 +2,33 @@ package com.wondacabinetinc.wondacabinetinc.datalayer;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.PositiveOrZero;
+import java.util.Random;
 
 @Entity
 @Table(name = "orders")
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="order_id")
+    @Column(name="order_id", unique = true, nullable = false)
     private Integer orderId;
 
-    @Column(name="orderStatus")
+    @Column(name="orderStatus", columnDefinition = "varchar(50) default 'Awaiting Order'", nullable = false)
     private String orderStatus;
 
-    @Column(name="trackingNo")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Digits(integer = 6, fraction = 0)
-    private Long trackingNo;
+    @Column(name="trackingNo",unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @PositiveOrZero
+    private Integer trackingNo;
 
     @Column(name="design")
     private String design;
@@ -39,7 +45,9 @@ public class Order {
     @Column(name="handle_type")
     private String handleType;
 
-    public void setTrackingNo(Long trackingNo) {
+    public void setTrackingNo(Integer trackingNo) {
+        Random rand = new Random();
+        this.trackingNo = rand.nextInt(999999);
         this.trackingNo = trackingNo;
     }
 
@@ -75,42 +83,6 @@ public class Order {
         this.handleType = handleType;
     }
 
-    public Order(int orderId, String orderStatus, long trackingNo, String design) {
-        this.orderId = orderId;
-        this.orderStatus = orderStatus;
-        this.trackingNo = trackingNo;
-        this.design = design;
-    }
-
-    public Order(String orderStatus, long trackingNo, String design) {
-        this.orderStatus = orderStatus;
-        this.trackingNo = trackingNo;
-        this.design = design;
-    }
-
-    public Order(Integer orderId, String orderStatus, @Digits(integer = 6, fraction = 0) Long trackingNo, String design, String cabinetType, String color, String material, String handleType) {
-        this.orderId = orderId;
-        this.orderStatus = orderStatus;
-        this.trackingNo = trackingNo;
-        this.design = design;
-        this.cabinetType = cabinetType;
-        this.color = color;
-        this.material = material;
-        this.handleType = handleType;
-    }
-
-    public Order(String orderStatus, @Digits(integer = 6, fraction = 0) Long trackingNo, String design, String cabinetType, String color, String material, String handleType) {
-        this.orderStatus = orderStatus;
-        this.trackingNo = trackingNo;
-        this.design = design;
-        this.cabinetType = cabinetType;
-        this.color = color;
-        this.material = material;
-        this.handleType = handleType;
-    }
-
-    public Order() {
-    }
 
     public int getOrderId() {
         return orderId;
@@ -128,12 +100,13 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    public long getTrackingNo() {
+    public int getTrackingNo() {
         return trackingNo;
     }
 
-    public void setTrackingNo(long trackingNo) {
-        this.trackingNo = trackingNo;
+    public void setTrackingNo(int trackingNo) {
+        Random rand = new Random();
+        this.trackingNo = rand.nextInt(999999);
     }
 
     public String getDesign() {

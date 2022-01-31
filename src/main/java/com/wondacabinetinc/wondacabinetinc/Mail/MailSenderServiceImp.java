@@ -87,7 +87,6 @@ public class MailSenderServiceImp implements  MailSenderService{
 
             mailsender.send(mimeMessage);
             return "Email sent";
-            
 
         }
         catch(MessagingException e) {
@@ -134,6 +133,5 @@ public class MailSenderServiceImp implements  MailSenderService{
         catch(MessagingException e) {
             throw new MessagingException("Failed to send email");
         }
-
     }
 }
