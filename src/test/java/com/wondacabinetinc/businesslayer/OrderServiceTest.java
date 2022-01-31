@@ -56,16 +56,16 @@ public class OrderServiceTest {
         int expected_length = 10;
 
         List<Order> orderList = new ArrayList<>();
-        orderList.add(new Order(1,"Received", 123321, "Design"));
-        orderList.add(new Order(2,"In Progress", 456647, "Design"));
-        orderList.add(new Order(3,"Design Received", 789789, "Design"));
-        orderList.add(new Order(4,"Awaiting Scheduling", 999999, "Design"));
-        orderList.add(new Order(5,"Shipped", 555555, "Design"));
-        orderList.add(new Order(6,"Cancelled", 333333, "Design"));
-        orderList.add(new Order(7,"Cancelled", 444444, "Design"));
-        orderList.add(new Order(8,"Closed", 777888, "Design"));
-        orderList.add(new Order(9,"Closed", 999000, "Design"));
-        orderList.add(new Order(10,"Closed", 334455, "Design"));
+        orderList.add(new Order(1, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
+        orderList.add(new Order(2, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
+        orderList.add(new Order(3, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
+        orderList.add(new Order(4, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
+        orderList.add(new Order(5, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
+        orderList.add(new Order(6, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
+        orderList.add(new Order(7, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
+        orderList.add(new Order(8, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
+        orderList.add(new Order(9, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
+        orderList.add(new Order(10, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
 
         when(orderResource.findAllOrders()).thenReturn(orderList);
 
@@ -81,9 +81,9 @@ public class OrderServiceTest {
         int expected_length = 3;
 
         List<Order> orderList = new ArrayList<>();
-        orderList.add(new Order(1,"Cancelled", 123321, "Design"));
-        orderList.add(new Order(2,"Cancelled", 456647, "Design"));
-        orderList.add(new Order(3,"Cancelled", 789789, "Design"));
+        orderList.add(new Order(1, "Cancelled",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
+        orderList.add(new Order(2, "Cancelled",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
+        orderList.add(new Order(3, "Cancelled",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
 
         when(orderService.getCancelledOrders()).thenReturn(orderList);
 
@@ -98,9 +98,9 @@ public class OrderServiceTest {
         int expected_length = 3;
 
         List<Order> orderList = new ArrayList<>();
-        orderList.add(new Order(1,"Awaiting Design", 123321, "Design"));
-        orderList.add(new Order(2,"Awaiting Design", 456647, "Design"));
-        orderList.add(new Order(3,"Awaiting Design", 789789, "Design"));
+        orderList.add(new Order(1, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
+        orderList.add(new Order(2, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
+        orderList.add(new Order(3, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob"));
 
         when(orderService.getNotCancelledOrders()).thenReturn(orderList);
 
@@ -115,7 +115,7 @@ public class OrderServiceTest {
     public void add_order(){
         int orderId = 1;
         Order order = new Order(orderId, "Done",
-                (long)555555, "Design",
+                555555, "Design",
                 "Kitchen Cabinet","White",
                 "Birch", "Circle");
 
@@ -132,8 +132,8 @@ public class OrderServiceTest {
     @DisplayName("Add an order null value")
     @Test
     public void add_order_throws_not_found_when_null_value(){
-        Order order = new Order("Done",
-                (long)555555, "Design",
+        Order order = new Order(null,"Done",
+                555555, "Design",
                 "Kitchen Cabinet","White",
                 "Birch", "Circle");
 
@@ -173,7 +173,7 @@ public class OrderServiceTest {
     @Test
     public void find_order_by_id(){
         Order order = new Order(1, "Done",
-                (long)555555, "Design",
+                555555, "Design",
                 "Kitchen Cabinet","White",
                 "Birch", "Circle");
 
@@ -204,7 +204,7 @@ public class OrderServiceTest {
     @DisplayName("Update order")
     @Test
     public void update_order(){
-        Order newOrder = new Order(1, "Received",(long)555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob");
+        Order newOrder = new Order(1, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob");
         when(orderRepository.findById(1)).thenReturn(Optional.of(newOrder));
 
         Optional<Order> retrieved = orderRepository.findById(1);
@@ -229,7 +229,7 @@ public class OrderServiceTest {
         int orderId = 100;
         String expectedMsg = "Order with Id: " + orderId + " not found";
 
-        Order newOrder = new Order(1, "Received",(long)555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob");
+        Order newOrder = new Order(1, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob");
 
         when(orderRepository.findById(Mockito.anyInt())).thenThrow(new NotFoundException());
 
