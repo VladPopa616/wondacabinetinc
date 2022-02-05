@@ -27,5 +27,5 @@ public interface OrderService {
 
     public String deleteOrder(Integer id);
 
-//    public String deleteByEmail(String email);
+    public String deleteByEmail(String email);
 }

@@ -272,5 +272,42 @@ public class OrderServiceTest {
         }
 
     }
+
+    @DisplayName("Delete Order With Email")
+    @Test
+    public void delete_order_with_email(){
+        String email = "wondacabinetinc@gmail.com";
+        long orderSize = 3;
+
+        String expectedMsg = "Deleted " + orderSize + " records with email: " + email;
+
+        when(orderRepository.deleteByEmail(email)).thenReturn(orderSize);
+        long or = orderRepository.deleteByEmail(email);
+
+        when(orderService.deleteByEmail(email)).thenReturn("Deleted " + or + " records with email: " + email);
+        String result = orderService.deleteByEmail(email);
+
+
+
+        assertEquals(expectedMsg, result);
+
+    }
+
+    @DisplayName("Delete Order With Email Should Return not found")
+    @Test
+    public void delete_order_with_email_should_return_not_found(){
+        String email = "notgoodwondacabinetinc@gmail.com";
+        String expectedMsg = "No orders with email: " + email;
+
+        when(orderRepository.findByEmail("randomemail@gmail.com")).thenThrow(new NotFoundException());
+
+        try{
+            orderService.deleteByEmail(email);
+        }
+        catch(Exception e){
+            assertEquals(e.getMessage(), expectedMsg);
+        }
+
+    }
 }
 
