@@ -21,6 +21,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     List<Order> findByEmailAndOrderStatusIs(String email, String status);
 
-    @Transactional
-    long deleteByEmail(String email);
+//    @Transactional
+//    long deleteByEmail(String email);
 }
