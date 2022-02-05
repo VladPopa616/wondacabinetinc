@@ -130,6 +130,7 @@ public class OrderServiceImpl implements OrderService {
     public String deleteOrder(Integer id){
         try{
             orderRepository.deleteById(id);
+            LOG.debug("Order with Id {} deleted", id);
             return "Order with ID: " + id + " successfully deleted.";
         }
         catch(Exception e){
