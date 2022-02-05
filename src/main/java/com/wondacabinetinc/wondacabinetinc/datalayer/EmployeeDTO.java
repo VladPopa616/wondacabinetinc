@@ -16,6 +16,9 @@ import java.util.Set;
 @NoArgsConstructor
 public class EmployeeDTO {
     private Long uid;
+    private String firstName;
+    private String lastName;
+    private String phone;
     private String username;
     private String email;
     private String password;
@@ -59,5 +62,30 @@ public class EmployeeDTO {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPhoneNumber() {
+        return phone;
+    }
+
+    public void setPhone(String phoneNumber) {
+        this.phone = phoneNumber;
     }
 }
