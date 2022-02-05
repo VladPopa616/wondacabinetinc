@@ -50,6 +50,8 @@ public class OrderServiceTest {
     @MockBean
     OrderService orderService;
 
+
+
     @DisplayName("Find all orders")
     @Test
     public void find_all_orders(){
@@ -240,4 +242,35 @@ public class OrderServiceTest {
             assertEquals(e.getMessage(), expectedMsg);
         }
     }
+
+    @DisplayName("Delete Order")
+    @Test
+    public void delete_order(){
+        int orderId = 1;
+
+        when(orderService.deleteOrder(1)).thenReturn("Order with ID: " + orderId +  " successfully deleted.");
+
+        String result = orderService.deleteOrder(orderId);
+
+        assertEquals(result, "Order with ID: " + orderId +  " successfully deleted.");
+
+    }
+
+    @DisplayName("Delete Order should return not found when id is invalid")
+    @Test
+    public void delete_order_should_return_not_found(){
+        int orderId = 100;
+        String expectedMsg = "No orders with orderId " + orderId;
+
+        when(orderRepository.findById(Mockito.anyInt())).thenThrow(new NotFoundException());
+
+        try{
+            orderService.deleteOrder(orderId);
+        }
+        catch(Exception e){
+            assertEquals(e.getMessage(), expectedMsg);
+        }
+
+    }
 }
+

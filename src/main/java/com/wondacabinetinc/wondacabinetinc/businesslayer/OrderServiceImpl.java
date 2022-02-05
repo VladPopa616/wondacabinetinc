@@ -125,4 +125,31 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> getNonCancelledByEmail(String email) {
         return orderRepository.findByEmailAndOrderStatusIsNot(email, "Cancelled");
     }
+
+    @Override
+    public String deleteOrder(Integer id){
+        try{
+            orderRepository.deleteById(id);
+            LOG.debug("Order with Id {} deleted", id);
+            return "Order with ID: " + id + " successfully deleted.";
+        }
+        catch(Exception e){
+            LOG.debug("No orders with orderId " + id );
+            throw new NotFoundException("Delete order with ID: " + id + " not found");
+        }
+
+    }
+
+//    @Override
+//    public String deleteByEmail(String email) {
+//        try{
+//            long numberOfDeleteRecords = orderRepository.deleteByEmail(email);
+//            LOG.debug("Deleted {} records with email {}", numberOfDeleteRecords, email );
+//            return "Deleted " + numberOfDeleteRecords + " records with email: " + email;
+//        }
+//        catch(Exception e){
+//            LOG.debug("No orders with email " + email + " to be deleted");
+//            throw new NotFoundException("No orders with email: " + email);
+//        }
+//    }
 }
