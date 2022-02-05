@@ -122,6 +122,14 @@ public class OrderResource {
         return orderService.getNonCancelledByEmail(email);
     }
 
+    @GetMapping("/email/active/{email}")
+    @ResponseBody
+    @CrossOrigin(origins = "*")
+    @PreAuthorize("hasAnyAuthority('ROLE_EMPLOYEE')")
+    public String deleteOrder(@PathVariable Integer id){
+        return orderService.deleteOrder(id);
+    }
+
 //    @PutMapping("/cancel/{orderId}")
 //    @ResponseBody
 //    @CrossOrigin(origins = "*")

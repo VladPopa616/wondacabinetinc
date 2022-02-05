@@ -24,4 +24,6 @@ public interface OrderService {
     public List<Order> getCancelledByEmail(String email);
 
     public List<Order> getNonCancelledByEmail(String email);
+
+    public String deleteOrder(Integer id);
 }
