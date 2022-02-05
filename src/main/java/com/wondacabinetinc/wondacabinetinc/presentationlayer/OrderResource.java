@@ -122,12 +122,12 @@ public class OrderResource {
         return orderService.getNonCancelledByEmail(email);
     }
 
-    @GetMapping("/email/active/{email}")
+    @GetMapping("/delete/{orderId}")
     @ResponseBody
     @CrossOrigin(origins = "*")
     @PreAuthorize("hasAnyAuthority('ROLE_EMPLOYEE')")
-    public String deleteOrder(@PathVariable Integer id){
-        return orderService.deleteOrder(id);
+    public String deleteOrder(@PathVariable Integer orderId){
+        return orderService.deleteOrder(orderId);
     }
 
 //    @PutMapping("/cancel/{orderId}")
