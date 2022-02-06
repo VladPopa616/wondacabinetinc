@@ -1,8 +1,10 @@
 package com.wondacabinetinc.wondacabinetinc.presentationlayer;
 
 import com.wondacabinetinc.wondacabinetinc.businesslayer.EmployeeMapper;
+import com.wondacabinetinc.wondacabinetinc.businesslayer.RefreshTokenService;
 import com.wondacabinetinc.wondacabinetinc.datalayer.*;
 import com.wondacabinetinc.wondacabinetinc.jwt.*;
+import com.wondacabinetinc.wondacabinetinc.utils.exceptions.TokenRefreshException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -51,6 +53,9 @@ public class AuthController {
     @Autowired
     EmployeeMapper employeeMapper;
 
+    @Autowired
+    RefreshTokenService refreshTokenService;
+
     @PostMapping("/login")
     @CrossOrigin
     @ResponseBody
@@ -59,13 +64,18 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = tokenUtils.generateToken(authentication);
+
 
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        String name = auth.getName();
         UserDetailsImpl userDetails = (UserDetailsImpl)  authentication.getPrincipal();
+
+        String jwt = tokenUtils.generateToken(userDetails);
+        
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
 
         log.info("Uid returned: " + userDetails.getId());
         log.info("User identified " + userDetails.getUsername());
@@ -74,7 +84,21 @@ public class AuthController {
         log.info("Roles returned" + userDetails.getAuthorities());
 
         System.out.println(userDetails.getPassword());
-        return ResponseEntity.ok(new JWTResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+        return ResponseEntity.ok(new JWTResponse(jwt, refreshToken.getToken(), userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+    }
+
+    @PostMapping("/refreshtoken")
+    @CrossOrigin
+    @ResponseBody
+    public ResponseEntity<?> refreshToken(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest){
+        String requestRefreshToken = refreshTokenRequest.getRefreshToken();
+        return refreshTokenService.findByToken(requestRefreshToken)
+                .map(refreshTokenService::verifyExpiration)
+                .map(RefreshToken::getEmployee)
+                .map(user -> {
+                    String token = tokenUtils.generateTokenFromUsername(user.getUsername());
+                    return ResponseEntity.ok(new RefreshTokenResponse(token, requestRefreshToken));
+                }).orElseThrow(() -> new TokenRefreshException(requestRefreshToken, "Refresh Token is not in the database"));
     }
 
     @PostMapping("/signup")
