@@ -130,13 +130,13 @@ public class OrderResource {
         return orderService.deleteOrder(orderId);
     }
 
-//    @DeleteMapping("/delete/email/{email}")
-//    @ResponseBody
-//    @CrossOrigin(origins = "*")
-//    @PreAuthorize("hasAnyAuthority('ROLE_EMPLOYEE')")
-//    public String deleteOrderByEmail(@PathVariable String email){
-//        return orderService.deleteByEmail(email);
-//    }
+    @DeleteMapping("/delete/email/{email}")
+    @ResponseBody
+    @CrossOrigin(origins = "*")
+    @PreAuthorize("hasAnyAuthority('ROLE_EMPLOYEE')")
+    public String deleteOrderByEmail(@PathVariable String email){
+        return orderService.deleteByEmail(email);
+    }
 
 //    @PutMapping("/cancel/{orderId}")
 //    @ResponseBody
