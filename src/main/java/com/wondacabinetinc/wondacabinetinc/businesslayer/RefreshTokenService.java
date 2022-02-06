@@ -3,6 +3,7 @@ package com.wondacabinetinc.wondacabinetinc.businesslayer;
 import com.wondacabinetinc.wondacabinetinc.datalayer.EmployeeRepository;
 import com.wondacabinetinc.wondacabinetinc.datalayer.RefreshToken;
 import com.wondacabinetinc.wondacabinetinc.datalayer.RefreshTokenRepository;
+import com.wondacabinetinc.wondacabinetinc.utils.exceptions.TokenRefreshException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,7 @@ public class RefreshTokenService {
     public RefreshToken verifyExpiration(RefreshToken token){
         if(token.getExpiryDate().compareTo(Instant.now()) < 0){
             refreshTokenRepository.delete(token);
-            //throw new TokenRefreshException(token.getToken(), "Refresh token was expired. Please make a new login request");
+            throw new TokenRefreshException(token.getToken(), "Refresh token was expired. Please make a new login request");
         }
         return token;
     }

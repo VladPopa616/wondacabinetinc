@@ -2,6 +2,7 @@ package com.wondacabinetinc.wondacabinetinc.utils.http;
 
 import com.wondacabinetinc.wondacabinetinc.utils.exceptions.InvalidInputException;
 import com.wondacabinetinc.wondacabinetinc.utils.exceptions.NotFoundException;
+import com.wondacabinetinc.wondacabinetinc.utils.exceptions.TokenRefreshException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -10,8 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
+import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
 public class GlobalControllerExceptionHandler {
@@ -27,6 +27,12 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(InvalidInputException.class)
     public HttpErrorInfo handleInvalidInputException(ServerHttpRequest request, Exception ex){
         return createHttpErrorInfo(HttpStatus.UNPROCESSABLE_ENTITY, request, ex);
+    }
+
+    @ResponseStatus(FORBIDDEN)
+    @ExceptionHandler(TokenRefreshException.class)
+    public HttpErrorInfo handleTokenRefreshException(ServerHttpRequest request, Exception ex){
+        return createHttpErrorInfo(FORBIDDEN, request, ex);
     }
 
     private HttpErrorInfo createHttpErrorInfo(HttpStatus httpStatus, ServerHttpRequest request, Exception ex){
