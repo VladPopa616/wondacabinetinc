@@ -307,8 +307,6 @@ public class OrderServiceTest {
         catch(Exception e){
             assertEquals(e.getMessage(), expectedMsg);
         }
-
-        
     }
 
 }
