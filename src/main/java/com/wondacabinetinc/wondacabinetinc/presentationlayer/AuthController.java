@@ -117,4 +117,30 @@ public class AuthController {
         employeeRepository.save(employeeMapper.employeeDTOtoEmployee(employee));
         return ResponseEntity.ok(new MessageResponse("User registered Successfully"));
     }
+
+    @PostMapping("/loginnotoken")
+    @CrossOrigin
+    @ResponseBody
+    public ResponseEntity<?> loginWithoutPassword(@Valid @RequestBody LoginRequest loginRequest){
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        String jwt = tokenUtils.generateToken(authentication);
+
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String name = auth.getName();
+        UserDetailsImpl userDetails = (UserDetailsImpl)  authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+
+        log.info("Uid returned: " + userDetails.getId());
+        log.info("User identified " + userDetails.getUsername());
+        log.info("User email identified " + userDetails.getEmail());
+        log.info("Password returned: " + userDetails.getPassword());
+        log.info("Roles returned" + userDetails.getAuthorities());
+
+        System.out.println(userDetails.getPassword());
+        return ResponseEntity.ok(new NoJWTResponse(userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+    }
 }
