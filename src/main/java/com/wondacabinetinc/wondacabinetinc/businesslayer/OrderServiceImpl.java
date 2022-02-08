@@ -98,6 +98,9 @@ public class OrderServiceImpl implements OrderService {
     public Order updateOrder(Integer id, Order order) {
         try{
             Optional<Order> orderOpt = orderRepository.findById(id);
+            if (orderOpt == null){
+                throw new NotFoundException("Order with Id: " + id + " not found");
+            }
             Order foundOrder = orderOpt.get();
             foundOrder.setOrderStatus(order.getOrderStatus());
             foundOrder.setTrackingNo(order.getTrackingNo());
