@@ -4,11 +4,11 @@ package com.wondacabinetinc.wondacabinetinc.businesslayer;
 import com.wondacabinetinc.wondacabinetinc.Mail.MailSenderService;
 import com.wondacabinetinc.wondacabinetinc.datalayer.Order;
 import com.wondacabinetinc.wondacabinetinc.datalayer.OrderRepository;
+import com.wondacabinetinc.wondacabinetinc.datalayer.OrderTrackingNoDTO;
 import com.wondacabinetinc.wondacabinetinc.utils.exceptions.InvalidInputException;
 import com.wondacabinetinc.wondacabinetinc.utils.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.support.NullValue;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,6 +18,7 @@ import javax.mail.MessagingException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -28,12 +29,13 @@ public class OrderServiceImpl implements OrderService {
 
     private final MailSenderService mailService;
 
+    private final OrderMapper mapper;
 
-
-    public OrderServiceImpl(OrderRepository orderRepository, MailSenderService mailService) {
+    public OrderServiceImpl(OrderRepository orderRepository, MailSenderService mailService, OrderMapper mapper) {
         this.orderRepository = orderRepository;
 
         this.mailService = mailService;
+        this.mapper = mapper;
     }
 
     @Override
@@ -155,11 +157,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Optional<Order> getOrderByTrackingNo(Integer trackingNo) {
+    public OrderTrackingNoDTO getOrderByTrackingNo(Integer trackingNo) {
         try{
             Optional<Order> foundOrder = orderRepository.findByTrackingNoIs(trackingNo);
+            if (foundOrder == null){
+                throw new NotFoundException("Order with trackingNo: " + trackingNo + " not found");
+            }
             LOG.debug("Order found with orderId: {}", trackingNo);
-            return foundOrder;
+            OrderTrackingNoDTO orderTrackingNoDTO = mapper.entityToModel(foundOrder.get());
+            return orderTrackingNoDTO;
         }
         catch(Exception e) {
             throw new NotFoundException("Order with trackingNo: " + trackingNo + " not found");

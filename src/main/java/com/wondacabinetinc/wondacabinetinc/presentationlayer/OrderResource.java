@@ -2,6 +2,7 @@ package com.wondacabinetinc.wondacabinetinc.presentationlayer;
 import com.wondacabinetinc.wondacabinetinc.Mail.MailSenderService;
 import com.wondacabinetinc.wondacabinetinc.businesslayer.OrderService;
 import com.wondacabinetinc.wondacabinetinc.datalayer.Order;
+import com.wondacabinetinc.wondacabinetinc.datalayer.OrderTrackingNoDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -142,7 +143,7 @@ public class OrderResource {
     @ResponseBody
     @CrossOrigin(origins = "*")
 //    @PreAuthorize("hasAnyAuthority()")
-    public Optional<Order> getByTrackingNumber(@PathVariable Integer trackingNo){
+    public OrderTrackingNoDTO getByTrackingNumber(@PathVariable Integer trackingNo){
         return orderService.getOrderByTrackingNo(trackingNo);
     }
 
