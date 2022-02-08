@@ -18,7 +18,6 @@ import javax.mail.MessagingException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -60,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
     public Optional<Order> getOrderDetails(Integer id) {
         try{
             Optional<Order> order = orderRepository.findById(id);
-            if (order == null){
+            if (order.get() == null){
                 throw new NotFoundException("Order with Id: " + id + " not found");
             }
             LOG.debug("Order with Id: " + id + " has been found");
@@ -98,9 +97,6 @@ public class OrderServiceImpl implements OrderService {
     public Order updateOrder(Integer id, Order order) {
         try{
             Optional<Order> orderOpt = orderRepository.findById(id);
-            if (orderOpt == null){
-                throw new NotFoundException("Order with Id: " + id + " not found");
-            }
             Order foundOrder = orderOpt.get();
             foundOrder.setOrderStatus(order.getOrderStatus());
             foundOrder.setTrackingNo(order.getTrackingNo());
