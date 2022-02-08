@@ -8,6 +8,7 @@ import com.wondacabinetinc.wondacabinetinc.utils.exceptions.InvalidInputExceptio
 import com.wondacabinetinc.wondacabinetinc.utils.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.support.NullValue;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -150,6 +151,18 @@ public class OrderServiceImpl implements OrderService {
         catch(Exception e){
             LOG.debug("No orders with email " + email + " to be deleted");
             throw new NotFoundException("No orders with email: " + email);
+        }
+    }
+
+    @Override
+    public Optional<Order> getOrderByTrackingNo(Integer trackingNo) {
+        try{
+            Optional<Order> foundOrder = orderRepository.findByTrackingNoIs(trackingNo);
+            LOG.debug("Order found with orderId: {}", trackingNo);
+            return foundOrder;
+        }
+        catch(Exception e) {
+            throw new NotFoundException("Order with trackingNo: " + trackingNo + " not found");
         }
     }
 

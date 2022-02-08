@@ -28,4 +28,6 @@ public interface OrderService {
     public String deleteOrder(Integer id);
 
     public String deleteByEmail(String email);
+
+    public Optional<Order> getOrderByTrackingNo(Integer trackingNo);
 }

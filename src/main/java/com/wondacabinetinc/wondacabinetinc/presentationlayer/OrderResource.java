@@ -138,6 +138,14 @@ public class OrderResource {
         return orderService.deleteByEmail(email);
     }
 
+    @GetMapping("/track/{trackingNo}")
+    @ResponseBody
+    @CrossOrigin(origins = "*")
+//    @PreAuthorize("hasAnyAuthority()")
+    public Optional<Order> getByTrackingNumber(@PathVariable Integer trackingNo){
+        return orderService.getOrderByTrackingNo(trackingNo);
+    }
+
 //    @PutMapping("/cancel/{orderId}")
 //    @ResponseBody
 //    @CrossOrigin(origins = "*")
