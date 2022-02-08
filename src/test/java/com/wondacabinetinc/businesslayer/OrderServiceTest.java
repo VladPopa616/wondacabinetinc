@@ -309,5 +309,37 @@ public class OrderServiceTest {
         }
     }
 
+    @DisplayName("Find order by tracking number")
+    @Test
+    public void find_order_by_trackingNo(){
+        Order order = new Order(1, "Done",
+                555555, "Design",
+                "Kitchen Cabinet","White",
+                "Birch", "Circle", "vpopa18@gmail.com");
+
+        when(orderRepository.findByTrackingNoIs(order.getTrackingNo())).thenReturn(Optional.of(order));
+
+        Optional<Order> retrievedOrder = orderRepository.findByTrackingNoIs(555555);
+        Order receivedOrder = retrievedOrder.get();
+
+        assertThat(receivedOrder.getTrackingNo()).isEqualTo(order.getTrackingNo());
+    }
+
+    @DisplayName("Find by tracking number Not Found")
+    @Test
+    public void find_by_tracking_number_throws_not_found_when_order_does_not_exist(){
+        int trackingNo = 1;
+        String expectedMsg = "Order with trackingNo: " + trackingNo + " not found";
+
+        when(orderRepository.findById(Mockito.anyInt())).thenThrow(new NotFoundException());
+
+        try{
+            orderService.getOrderByTrackingNo(trackingNo);
+        }
+        catch(NotFoundException e){
+            assertEquals(e.getMessage(), expectedMsg);
+        }
+    }
+
 }
 

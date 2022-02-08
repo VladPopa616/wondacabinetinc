@@ -2,6 +2,7 @@ package com.wondacabinetinc.wondacabinetinc.presentationlayer;
 import com.wondacabinetinc.wondacabinetinc.Mail.MailSenderService;
 import com.wondacabinetinc.wondacabinetinc.businesslayer.OrderService;
 import com.wondacabinetinc.wondacabinetinc.datalayer.Order;
+import com.wondacabinetinc.wondacabinetinc.datalayer.OrderTrackingNoDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -136,6 +137,14 @@ public class OrderResource {
     @PreAuthorize("hasAnyAuthority('ROLE_EMPLOYEE')")
     public String deleteOrderByEmail(@PathVariable String email){
         return orderService.deleteByEmail(email);
+    }
+
+    @GetMapping("/track/{trackingNo}")
+    @ResponseBody
+    @CrossOrigin(origins = "*")
+//    @PreAuthorize("hasAnyAuthority()")
+    public OrderTrackingNoDTO getByTrackingNumber(@PathVariable Integer trackingNo){
+        return orderService.getOrderByTrackingNo(trackingNo);
     }
 
 //    @PutMapping("/cancel/{orderId}")

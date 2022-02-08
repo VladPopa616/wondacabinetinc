@@ -167,4 +167,5 @@ public class AuthController {
         System.out.println(userDetails.getPassword());
         return ResponseEntity.ok(new NoJWTResponse(userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
     }
+
 }
