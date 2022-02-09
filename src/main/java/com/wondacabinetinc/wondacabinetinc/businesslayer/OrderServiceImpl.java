@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.regex.Pattern;
-
 import static com.wondacabinetinc.wondacabinetinc.datalayer.EmailValidator.validateEmail;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -88,9 +88,6 @@ public class OrderServiceImpl implements OrderService {
             if (validEmail){
                 mailService.sendCreateEmailWithAttachment(order.getEmail(), order);
             }
-//            else{
-//                throw new InvalidEmailException("The email: " + order.getEmail() + " is invalid.");
-//            }
 
 
             return orderRepository.save(order);
