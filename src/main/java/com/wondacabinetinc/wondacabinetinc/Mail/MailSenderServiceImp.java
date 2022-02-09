@@ -1,5 +1,6 @@
 package com.wondacabinetinc.wondacabinetinc.Mail;
 
+import com.wondacabinetinc.wondacabinetinc.datalayer.Employee;
 import com.wondacabinetinc.wondacabinetinc.datalayer.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -131,6 +132,39 @@ public class MailSenderServiceImp implements  MailSenderService{
 
         }
         catch(MessagingException e) {
+            throw new MessagingException("Failed to send email");
+        }
+    }
+
+    @Override
+    public String sendAccountCreationEmail(String toEmail, Employee employee) throws MessagingException{
+        try{
+            MimeMessage mimeMessage = mailsender.createMimeMessage();
+
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+
+            String body = "Welcome to Wonda Cabinet Inc. \n" +
+                    "Your account has officially been created. \n" +
+                    "Here is the information we have about your account: \n" +
+                    "First Name: " + employee.getFirstName() + "\n" +
+                    "Last Name: " + employee.getLastName() + "\n" +
+                    "Username: " + employee.getUsername() + "\n" +
+                    "Email address: " + employee.getEmail() + "\n" +
+                    "Phone Number: " + employee.getPhone() + "\n" +
+                    "If you think there's any mistake, please contact an employee. \n" +
+                    "Thank you for choosing Wonda Cabinet Inc.";
+
+            String subject = "ACCOUNT CREATION: " + employee.getUsername();
+
+            mimeMessageHelper.setFrom("noreply.wondacabinetinc@gmail.com");
+            mimeMessageHelper.setTo(toEmail);
+            mimeMessageHelper.setText(body);
+            mimeMessageHelper.setSubject(subject);
+
+            mailsender.send(mimeMessage);
+            return "Email sent";
+        }
+        catch(Exception e){
             throw new MessagingException("Failed to send email");
         }
     }

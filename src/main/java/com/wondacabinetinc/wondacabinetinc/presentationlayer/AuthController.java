@@ -1,5 +1,6 @@
 package com.wondacabinetinc.wondacabinetinc.presentationlayer;
 
+import com.wondacabinetinc.wondacabinetinc.Mail.MailSenderService;
 import com.wondacabinetinc.wondacabinetinc.businesslayer.EmployeeMapper;
 import com.wondacabinetinc.wondacabinetinc.businesslayer.RefreshTokenService;
 import com.wondacabinetinc.wondacabinetinc.datalayer.*;
@@ -19,6 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -55,6 +57,9 @@ public class AuthController {
 
     @Autowired
     RefreshTokenService refreshTokenService;
+
+    @Autowired
+    private MailSenderService mailSenderService;
 
     @PostMapping("/login")
     @CrossOrigin
@@ -139,6 +144,12 @@ public class AuthController {
 
         employee.setRoles(roles);
         employeeRepository.save(employeeMapper.employeeDTOtoEmployee(employee));
+        try{
+            mailSenderService.sendAccountCreationEmail("wondacabinetinctestemail@gmail.com", employeeMapper.employeeDTOtoEmployee(employee));
+        }
+        catch(MessagingException e){
+            return ResponseEntity.status(500).body("Error sending email");
+        }
         return ResponseEntity.ok(new MessageResponse("User registered Successfully"));
     }
 
