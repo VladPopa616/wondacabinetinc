@@ -5,6 +5,7 @@ import com.wondacabinetinc.wondacabinetinc.Mail.MailSenderService;
 import com.wondacabinetinc.wondacabinetinc.datalayer.Order;
 import com.wondacabinetinc.wondacabinetinc.datalayer.OrderRepository;
 import com.wondacabinetinc.wondacabinetinc.datalayer.OrderTrackingNoDTO;
+import com.wondacabinetinc.wondacabinetinc.utils.exceptions.InvalidEmailException;
 import com.wondacabinetinc.wondacabinetinc.utils.exceptions.InvalidInputException;
 import com.wondacabinetinc.wondacabinetinc.utils.exceptions.NotFoundException;
 import org.slf4j.Logger;
@@ -18,6 +19,9 @@ import javax.mail.MessagingException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.regex.Pattern;
+
+import static com.wondacabinetinc.wondacabinetinc.datalayer.EmailValidator.validateEmail;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -80,7 +84,15 @@ public class OrderServiceImpl implements OrderService {
             order.setOrderStatus("Awaiting Order");
             order.setDesign("https://s2.q4cdn.com/498544986/files/doc_downloads/test.pdf");
             LOG.debug("Order Added: order with ID {} saved", order.getOrderId());
-            mailService.sendCreateEmailWithAttachment("wondacabinetinctestemail@gmail.com", order);
+            boolean validEmail = validateEmail(order.getEmail());
+            if (validEmail){
+                mailService.sendCreateEmailWithAttachment(order.getEmail(), order);
+            }
+//            else{
+//                throw new InvalidEmailException("The email: " + order.getEmail() + " is invalid.");
+//            }
+
+
             return orderRepository.save(order);
         }
         catch(DuplicateKeyException e){
