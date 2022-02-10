@@ -8,4 +8,6 @@ import java.util.List;
 public interface EmployeeService {
     List<EmployeeDTO> getAllEmployeesDTO();
     EmployeeDTO getEmployeeDTOById(long uid) throws NotFoundException;
+
+    String updatePassword(String email, String password) throws NotFoundException;
 }
