@@ -16,7 +16,7 @@ import java.util.UUID;
 @Service
 public class PasswordResetService {
 
-    @Value("@{jwt.passwordtokenexpiration}")
+    @Value("${jwt.passwordtokenexpiration}")
     private Long passwordTokenExpiration;
 
     @Autowired

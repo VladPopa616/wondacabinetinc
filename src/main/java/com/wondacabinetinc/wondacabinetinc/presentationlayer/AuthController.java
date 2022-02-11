@@ -2,10 +2,13 @@ package com.wondacabinetinc.wondacabinetinc.presentationlayer;
 
 import com.wondacabinetinc.wondacabinetinc.Mail.MailSenderService;
 import com.wondacabinetinc.wondacabinetinc.businesslayer.EmployeeMapper;
+import com.wondacabinetinc.wondacabinetinc.businesslayer.EmployeeService;
+import com.wondacabinetinc.wondacabinetinc.businesslayer.PasswordResetService;
 import com.wondacabinetinc.wondacabinetinc.businesslayer.RefreshTokenService;
 import com.wondacabinetinc.wondacabinetinc.datalayer.*;
 import com.wondacabinetinc.wondacabinetinc.jwt.*;
 import com.wondacabinetinc.wondacabinetinc.utils.exceptions.TokenRefreshException;
+import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -60,6 +63,12 @@ public class AuthController {
 
     @Autowired
     private MailSenderService mailSenderService;
+
+    @Autowired
+    private EmployeeService employeeService;
+
+    @Autowired
+    private PasswordResetService passwordResetService;
 
     @PostMapping("/login")
     @CrossOrigin
@@ -177,6 +186,23 @@ public class AuthController {
 
         System.out.println(userDetails.getPassword());
         return ResponseEntity.ok(new NoJWTResponse(userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+    }
+
+    @PostMapping("/passwordtoken")
+    @CrossOrigin
+    @ResponseBody
+    public ResponseEntity<?> createPasswordToken(@Valid @RequestBody PasswordTokenGenerationRequest passwordTokenGenerationRequest){
+        try{
+            Optional<Employee> employeeOpt = employeeRepository.findByEmail(passwordTokenGenerationRequest.getEmail());
+            Employee employee = employeeOpt.get();
+            PasswordReset passwordReset = passwordResetService.createPasswordResetToken(employee.getUId());
+
+            return ResponseEntity.ok(new PasswordTokenGenerationResponse(passwordReset.getPasswordResetToken()));
+        }
+        catch(Exception e){
+            return ResponseEntity.status(401).body(new MessageResponse("Cannot generate password reset token, something went wrong. Cause: " + e.getMessage()));
+        }
+        
     }
 
 }
