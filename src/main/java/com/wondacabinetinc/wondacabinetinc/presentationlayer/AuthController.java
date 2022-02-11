@@ -206,4 +206,30 @@ public class AuthController {
 
     }
 
+
+    @PostMapping("/resetpassword")
+    @CrossOrigin
+    @ResponseBody
+    public ResponseEntity<?> resetPassword(@Valid @RequestBody PasswordResetRequest passwordResetRequest) {
+        try{
+            String token = passwordResetRequest.getPasswordToken();
+            String newPassword = passwordEncoder.encode(passwordResetRequest.getNewPassword());
+
+            return passwordResetService.findByToken(token)
+                    .map(passwordResetService::verifyExpiration)
+                    .map(PasswordReset::getEmployee)
+                    .map(user -> {
+                        try {
+                            employeeService.updatePassword(user.getEmail(), newPassword);
+                            return ResponseEntity.ok(new PasswordResetResponse("Password Reset successfully", newPassword));
+                        } catch (NotFoundException e) {
+                            return ResponseEntity.status(404).body("No user was found");
+                        }
+                    }).orElseThrow(() -> new TokenRefreshException(token, "Password Token Invalid"));
+        }
+        catch(Exception e){
+            return ResponseEntity.status(401).body(new MessageResponse("Password failed to update due to: " + e.getMessage()));
+        }
+    }
+
 }
