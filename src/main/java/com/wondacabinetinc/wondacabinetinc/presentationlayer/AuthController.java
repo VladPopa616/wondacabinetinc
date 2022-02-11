@@ -1,10 +1,14 @@
 package com.wondacabinetinc.wondacabinetinc.presentationlayer;
 
+import com.wondacabinetinc.wondacabinetinc.Mail.MailSenderService;
 import com.wondacabinetinc.wondacabinetinc.businesslayer.EmployeeMapper;
+import com.wondacabinetinc.wondacabinetinc.businesslayer.EmployeeService;
+import com.wondacabinetinc.wondacabinetinc.businesslayer.PasswordResetService;
 import com.wondacabinetinc.wondacabinetinc.businesslayer.RefreshTokenService;
 import com.wondacabinetinc.wondacabinetinc.datalayer.*;
 import com.wondacabinetinc.wondacabinetinc.jwt.*;
 import com.wondacabinetinc.wondacabinetinc.utils.exceptions.TokenRefreshException;
+import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +23,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -55,6 +60,15 @@ public class AuthController {
 
     @Autowired
     RefreshTokenService refreshTokenService;
+
+    @Autowired
+    private MailSenderService mailSenderService;
+
+    @Autowired
+    private EmployeeService employeeService;
+
+    @Autowired
+    private PasswordResetService passwordResetService;
 
     @PostMapping("/login")
     @CrossOrigin
@@ -139,6 +153,12 @@ public class AuthController {
 
         employee.setRoles(roles);
         employeeRepository.save(employeeMapper.employeeDTOtoEmployee(employee));
+        try{
+            mailSenderService.sendAccountCreationEmail("wondacabinetinctestemail@gmail.com", employeeMapper.employeeDTOtoEmployee(employee));
+        }
+        catch(MessagingException e){
+            return ResponseEntity.status(500).body("Error sending email");
+        }
         return ResponseEntity.ok(new MessageResponse("User registered Successfully"));
     }
 
@@ -166,6 +186,50 @@ public class AuthController {
 
         System.out.println(userDetails.getPassword());
         return ResponseEntity.ok(new NoJWTResponse(userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+    }
+
+    @PostMapping("/passwordtoken")
+    @CrossOrigin
+    @ResponseBody
+    public ResponseEntity<?> createPasswordToken(@Valid @RequestBody PasswordTokenGenerationRequest passwordTokenGenerationRequest){
+        try{
+            Optional<Employee> employeeOpt = employeeRepository.findByEmail(passwordTokenGenerationRequest.getEmail());
+            Employee employee = employeeOpt.get();
+            PasswordReset passwordReset = passwordResetService.createPasswordResetToken(employee.getUId());
+
+            mailSenderService.sendPasswordTokenEmail("wondacabinetinctestemail@gmail.com", passwordReset);
+            return ResponseEntity.ok(new PasswordTokenGenerationResponse(passwordReset.getPasswordResetToken()));
+        }
+        catch(Exception e){
+            return ResponseEntity.status(401).body(new MessageResponse("Cannot generate password reset token, something went wrong. Cause: " + e.getMessage()));
+        }
+
+    }
+
+
+    @PostMapping("/resetpassword")
+    @CrossOrigin
+    @ResponseBody
+    public ResponseEntity<?> resetPassword(@Valid @RequestBody PasswordResetRequest passwordResetRequest) {
+        try{
+            String token = passwordResetRequest.getPasswordToken();
+            String newPassword = passwordEncoder.encode(passwordResetRequest.getNewPassword());
+
+            return passwordResetService.findByToken(token)
+                    .map(passwordResetService::verifyExpiration)
+                    .map(PasswordReset::getEmployee)
+                    .map(user -> {
+                        try {
+                            employeeService.updatePassword(user.getEmail(), newPassword);
+                            return ResponseEntity.ok(new PasswordResetResponse("Password Reset successfully", newPassword));
+                        } catch (NotFoundException e) {
+                            return ResponseEntity.status(404).body("No user was found");
+                        }
+                    }).orElseThrow(() -> new TokenRefreshException(token, "Password Token Invalid"));
+        }
+        catch(Exception e){
+            return ResponseEntity.status(401).body(new MessageResponse("Password failed to update due to: " + e.getMessage()));
+        }
     }
 
 }
