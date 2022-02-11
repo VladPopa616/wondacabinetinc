@@ -197,12 +197,13 @@ public class AuthController {
             Employee employee = employeeOpt.get();
             PasswordReset passwordReset = passwordResetService.createPasswordResetToken(employee.getUId());
 
+            mailSenderService.sendPasswordTokenEmail("wondacabinetinctestemail@gmail.com", passwordReset);
             return ResponseEntity.ok(new PasswordTokenGenerationResponse(passwordReset.getPasswordResetToken()));
         }
         catch(Exception e){
             return ResponseEntity.status(401).body(new MessageResponse("Cannot generate password reset token, something went wrong. Cause: " + e.getMessage()));
         }
-        
+
     }
 
 }

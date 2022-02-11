@@ -2,6 +2,8 @@ package com.wondacabinetinc.wondacabinetinc.Mail;
 
 import com.wondacabinetinc.wondacabinetinc.datalayer.Employee;
 import com.wondacabinetinc.wondacabinetinc.datalayer.Order;
+import com.wondacabinetinc.wondacabinetinc.datalayer.PasswordReset;
+import com.wondacabinetinc.wondacabinetinc.jwt.PasswordTokenGenerationResponse;
 
 import javax.mail.MessagingException;
 
@@ -18,4 +20,6 @@ public interface MailSenderService {
     public String sendCreateEmailWithAttachment(String toEmail, Order order) throws MessagingException;
 
     public String sendAccountCreationEmail(String toEmail, Employee employee) throws MessagingException;
+
+    public String sendPasswordTokenEmail(String toEmail, PasswordReset passwordReset) throws MessagingException;
 }
