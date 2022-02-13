@@ -22,4 +22,8 @@ public interface MailSenderService {
     public String sendAccountCreationEmail(String toEmail, Employee employee) throws MessagingException;
 
     public String sendPasswordTokenEmail(String toEmail, PasswordReset passwordReset) throws MessagingException;
+
+    public String sendUpdateRequestEmail(String toEmail, UpdateEmailRequest request) throws MessagingException;
+
+    public String sendCancelRequestEmail(String toEmail, CancellationEmailRequest request) throws MessagingException;
 }

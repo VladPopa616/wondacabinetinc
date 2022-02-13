@@ -200,4 +200,55 @@ public class MailSenderServiceImp implements  MailSenderService{
             throw new MessagingException("Failed to send email");
         }
     }
+
+    @Override
+    public String sendUpdateRequestEmail(String toEmail, UpdateEmailRequest request) throws MessagingException {
+        try{
+            MimeMessage mimeMessage = mailsender.createMimeMessage();
+
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+
+            String body = "Tracking number: " + request.getTrackingNo() + "\n" + request.getBody();
+
+            String subject = " NEW ORDER UPDATE REQUEST";
+
+            mimeMessageHelper.setFrom("vpopa18@gmail.com");
+            mimeMessageHelper.setTo(toEmail);
+            mimeMessageHelper.setText(body);
+            mimeMessageHelper.setSubject(subject);
+
+            mailsender.send(mimeMessage);
+            return "Email sent";
+        }
+        catch (Exception e){
+            throw new MessagingException("Failed to send email");
+        }
+
+    }
+
+    @Override
+    public String sendCancelRequestEmail(String toEmail, CancellationEmailRequest request) throws MessagingException {
+        try{
+            MimeMessage mimeMessage = mailsender.createMimeMessage();
+
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+
+            String body = "Tracking number: " + request.getTrackingNo() + "\n" + request.getBody();
+
+            String subject = "ORDER CANCELLATION REQUEST";
+
+            mimeMessageHelper.setFrom("vpopa18@gmail.com");
+            mimeMessageHelper.setTo(toEmail);
+            mimeMessageHelper.setText(body);
+            mimeMessageHelper.setSubject(subject);
+
+            mailsender.send(mimeMessage);
+            return "Email sent";
+        }
+        catch(Exception e){
+            throw new MessagingException("Failed to send email");
+        }
+
+
+    }
 }
