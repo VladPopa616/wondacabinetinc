@@ -1,14 +1,19 @@
 package com.wondacabinetinc.wondacabinetinc.presentationlayer;
+import com.wondacabinetinc.wondacabinetinc.Mail.CancellationEmailRequest;
 import com.wondacabinetinc.wondacabinetinc.Mail.MailSenderService;
+import com.wondacabinetinc.wondacabinetinc.Mail.UpdateEmailRequest;
 import com.wondacabinetinc.wondacabinetinc.businesslayer.OrderService;
 import com.wondacabinetinc.wondacabinetinc.datalayer.Order;
 import com.wondacabinetinc.wondacabinetinc.datalayer.OrderTrackingNoDTO;
+import com.wondacabinetinc.wondacabinetinc.jwt.MessageResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PreDestroy;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -145,6 +150,32 @@ public class OrderResource {
 //    @PreAuthorize("hasAnyAuthority()")
     public OrderTrackingNoDTO getByTrackingNumber(@PathVariable Integer trackingNo){
         return orderService.getOrderByTrackingNo(trackingNo);
+    }
+
+    @PostMapping("/updaterequest")
+    @ResponseBody
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<?> sendUpdateRequest(@Valid @RequestBody UpdateEmailRequest request){
+       try{
+           mailService.sendUpdateRequestEmail("noreply.wondacabinetinc@gmail.com", request);
+           return ResponseEntity.ok(new MessageResponse("Email sent sucessfully"));
+       }
+       catch(Exception e){
+           return ResponseEntity.status(400).body(new MessageResponse("Failed to send email due to: " + e.getMessage()));
+       }
+    }
+
+    @PostMapping("/cancelrequest")
+    @ResponseBody
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<?> sendCancelRequest(@Valid @RequestBody CancellationEmailRequest request){
+        try{
+            mailService.sendCancelRequestEmail("noreply.wondacabinetinc@gmail.com", request);
+            return ResponseEntity.ok(new MessageResponse("Email sent sucessfully"));
+        }
+        catch(Exception e){
+            return ResponseEntity.status(400).body(new MessageResponse("Failed to send email due to: " + e.getMessage()));
+        }
     }
 
 //    @PutMapping("/cancel/{orderId}")

@@ -212,7 +212,7 @@ public class MailSenderServiceImp implements  MailSenderService{
 
             String subject = " NEW ORDER UPDATE REQUEST";
 
-            mimeMessageHelper.setFrom("wondacabinetinctestemail@gmail.com");
+            mimeMessageHelper.setFrom("vpopa18@gmail.com");
             mimeMessageHelper.setTo(toEmail);
             mimeMessageHelper.setText(body);
             mimeMessageHelper.setSubject(subject);
@@ -237,7 +237,7 @@ public class MailSenderServiceImp implements  MailSenderService{
 
             String subject = "ORDER CANCELLATION REQUEST";
 
-            mimeMessageHelper.setFrom("wondacabinetinctestemail@gmail.com");
+            mimeMessageHelper.setFrom("vpopa18@gmail.com");
             mimeMessageHelper.setTo(toEmail);
             mimeMessageHelper.setText(body);
             mimeMessageHelper.setSubject(subject);
