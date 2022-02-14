@@ -1,5 +1,6 @@
 package com.wondacabinetinc.wondacabinetinc.datalayer;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.PositiveOrZero;
+import java.util.Date;
 import java.util.Random;
 
 @Entity
@@ -27,9 +29,9 @@ public class Order {
     private String orderStatus;
 
     @Column(name="trackingNo",unique = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @PositiveOrZero
-    private Integer trackingNo;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @PositiveOrZero
+    private String trackingNo;
 
     @Column(name="design")
     private String design;
@@ -39,6 +41,22 @@ public class Order {
 
     @Column(name="color")
     private String color;
+
+    @Column(name="address")
+    private String address;
+
+    @Column(name="city")
+    private String city;
+
+    @Column(name="order_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date orderDate;
+
+    @Column(name="delivery_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date deliveryDate;
 
     @Column(name="material")
     private String material;
@@ -50,11 +68,11 @@ public class Order {
     @Email
     private String email;
 
-    public void setTrackingNo(Integer trackingNo) {
-        Random rand = new Random();
-        this.trackingNo = rand.nextInt(999999);
-        this.trackingNo = trackingNo;
-    }
+//    public void setTrackingNo(Integer trackingNo) {
+//        Random rand = new Random();
+//        this.trackingNo = rand.nextInt(999999);
+//        this.trackingNo = trackingNo;
+//    }
 
     public String getCabinetType() {
         return cabinetType;
@@ -62,6 +80,10 @@ public class Order {
 
     public void setCabinetType(String cabinetType) {
         this.cabinetType = cabinetType;
+    }
+
+    public void setTrackingNo(String trackingNo) {
+        this.trackingNo = trackingNo;
     }
 
     public String getColor() {
@@ -105,14 +127,14 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    public int getTrackingNo() {
-        return trackingNo;
-    }
+//    public int getTrackingNo() {
+//        return trackingNo;
+//    }
 
-    public void setTrackingNo(int trackingNo) {
-        Random rand = new Random();
-        this.trackingNo = rand.nextInt(999999);
-    }
+//    public void setTrackingNo(int trackingNo) {
+//        Random rand = new Random();
+//        this.trackingNo = rand.nextInt(999999);
+//    }
 
     public String getDesign() {
         return design;
@@ -129,4 +151,42 @@ public class Order {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getTrackingNo() {
+        return trackingNo;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
 }

@@ -15,6 +15,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import javax.mail.MessagingException;
 
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.UUID;
+
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -28,7 +32,8 @@ public class MailingServiceTest {
     @MockBean
     MailSenderService mailSenderService;
 
-    Order order = new Order(1, "Received",555555, "Design", "Kitchen Cabinet", "Ivory", "Pine", "Knob", "vpopa18@gmail.com");
+    Date date = new Date();
+    Order order = new Order(1, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com");
 
     @BeforeEach
     void setUp() throws MessagingException {

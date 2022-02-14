@@ -3,8 +3,10 @@ package com.wondacabinetinc.wondacabinetinc.businesslayer;
 import com.wondacabinetinc.wondacabinetinc.datalayer.Order;
 import com.wondacabinetinc.wondacabinetinc.datalayer.OrderTrackingNoDTO;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface OrderService {
 
@@ -20,6 +22,8 @@ public interface OrderService {
 
     public Order updateOrder(Integer id, Order order);
 
+    public Order updateOrderDelivery(Integer id, String date);
+
     public List<Order> getOrderByEmail(String email);
 
     public List<Order> getCancelledByEmail(String email);
@@ -30,5 +34,5 @@ public interface OrderService {
 
     public String deleteByEmail(String email);
 
-    public OrderTrackingNoDTO getOrderByTrackingNo(Integer trackingNo);
+    public OrderTrackingNoDTO getOrderByTrackingNo(String trackingNo);
 }

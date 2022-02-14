@@ -21,7 +21,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     List<Order> findByEmailAndOrderStatusIs(String email, String status);
 
-    Optional<Order> findByTrackingNoIs(Integer trackingNo);
+    Optional<Order> findByTrackingNoIs(String trackingNo);
 
     @Transactional
     long deleteByEmail(String email);

@@ -3,10 +3,13 @@ import com.wondacabinetinc.wondacabinetinc.Mail.CancellationEmailRequest;
 import com.wondacabinetinc.wondacabinetinc.Mail.MailSenderService;
 import com.wondacabinetinc.wondacabinetinc.Mail.UpdateEmailRequest;
 import com.wondacabinetinc.wondacabinetinc.businesslayer.OrderService;
+import com.wondacabinetinc.wondacabinetinc.businesslayer.OrderServiceImpl;
 import com.wondacabinetinc.wondacabinetinc.datalayer.Order;
 import com.wondacabinetinc.wondacabinetinc.datalayer.OrderTrackingNoDTO;
 import com.wondacabinetinc.wondacabinetinc.jwt.MessageResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,9 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PreDestroy;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @Slf4j
@@ -27,7 +28,7 @@ public class OrderResource {
 
     private final MailSenderService mailService;
 
-
+    private static final Logger LOG = LoggerFactory.getLogger(OrderResource.class);
 
     public OrderResource(OrderService orderService, MailSenderService mailService) {
         this.orderService = orderService;
@@ -100,8 +101,15 @@ public class OrderResource {
     @CrossOrigin(origins = "*")
     @PreAuthorize("hasAuthority('ROLE_EMPLOYEE')")
     public Order updateOrder(@PathVariable("orderId") int orderId, @RequestBody Order order){
-
         return orderService.updateOrder(orderId, order);
+    }
+
+    @PutMapping("/delivery/{orderId}")
+    @ResponseBody
+    @CrossOrigin(origins = "*")
+    @PreAuthorize("hasAuthority('ROLE_EMPLOYEE')")
+    public Order updateOrderDelivery(@PathVariable("orderId") int orderId, @RequestBody String date){
+        return orderService.updateOrderDelivery(orderId, date);
     }
 
     @GetMapping("/email/{email}")
@@ -148,7 +156,7 @@ public class OrderResource {
     @ResponseBody
     @CrossOrigin(origins = "*")
 //    @PreAuthorize("hasAnyAuthority()")
-    public OrderTrackingNoDTO getByTrackingNumber(@PathVariable Integer trackingNo){
+    public OrderTrackingNoDTO getByTrackingNumber(@PathVariable String trackingNo){
         return orderService.getOrderByTrackingNo(trackingNo);
     }
 
