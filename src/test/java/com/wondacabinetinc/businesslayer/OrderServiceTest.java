@@ -59,15 +59,15 @@ public class OrderServiceTest {
         List<Order> orderList = new ArrayList<>();
         Date date = new Date();
         UUID trackingNo = UUID.randomUUID();;
-        orderList.add(new Order(1, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
-        orderList.add(new Order(2, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
-        orderList.add(new Order(3, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
-        orderList.add(new Order(4, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
-        orderList.add(new Order(5, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
-        orderList.add(new Order(6, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
-        orderList.add(new Order(7, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
-        orderList.add(new Order(8, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
-        orderList.add(new Order(9, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
+        orderList.add(new Order(1, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
+        orderList.add(new Order(2, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
+        orderList.add(new Order(3, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
+        orderList.add(new Order(4, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
+        orderList.add(new Order(5, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
+        orderList.add(new Order(6, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
+        orderList.add(new Order(7, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
+        orderList.add(new Order(8, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
+        orderList.add(new Order(9, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
 
 
         when(orderResource.findAllOrders()).thenReturn(orderList);
@@ -85,9 +85,9 @@ public class OrderServiceTest {
 
         List<Order> orderList = new ArrayList<>();
         Date date = new Date();
-        orderList.add(new Order(1, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
-        orderList.add(new Order(2, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
-        orderList.add(new Order(3, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
+        orderList.add(new Order(1, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
+        orderList.add(new Order(2, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
+        orderList.add(new Order(3, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
 
         when(orderService.getCancelledOrders()).thenReturn(orderList);
 
@@ -103,9 +103,9 @@ public class OrderServiceTest {
 
         List<Order> orderList = new ArrayList<>();
         Date date = new Date();
-        orderList.add(new Order(1, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
-        orderList.add(new Order(2, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
-        orderList.add(new Order(3, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
+        orderList.add(new Order(1, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
+        orderList.add(new Order(2, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
+        orderList.add(new Order(3, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com"));
 
         when(orderService.getNotCancelledOrders()).thenReturn(orderList);
 
@@ -120,7 +120,7 @@ public class OrderServiceTest {
     public void add_order(){
         int orderId = 1;
         Date date = new Date();
-        Order order = new Order(orderId, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com");
+        Order order = new Order(orderId, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com");
 
         when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
 
@@ -136,7 +136,7 @@ public class OrderServiceTest {
     @Test
     public void add_order_throws_not_found_when_null_value(){
         Date date = new Date();
-        Order order = new Order(1, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com");
+        Order order = new Order(1, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com");
 
 
         String expectedMsg = "Error adding Order, missing inputs";
@@ -174,7 +174,7 @@ public class OrderServiceTest {
     @Test
     public void find_order_by_id(){
         Date date = new Date();
-        Order order = new Order(1, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com");
+        Order order = new Order(1, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com");
 
 
         when(orderRepository.findById(1)).thenReturn(Optional.of(order));
@@ -205,7 +205,7 @@ public class OrderServiceTest {
     @Test
     public void update_order(){
         Date date = new Date();
-        Order newOrder = new Order(1, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com");
+        Order newOrder = new Order(1, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com");
 
         when(orderRepository.findById(1)).thenReturn(Optional.of(newOrder));
 
@@ -232,7 +232,7 @@ public class OrderServiceTest {
         String expectedMsg = "Order with Id: " + orderId + " not found";
 
         Date date = new Date();
-        Order newOrder = new Order(1, "Done", UUID.randomUUID(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com");
+        Order newOrder = new Order(1, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com");
 
 
         when(orderRepository.findById(Mockito.anyInt())).thenThrow(new NotFoundException());
