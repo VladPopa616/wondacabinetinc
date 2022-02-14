@@ -8,6 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderTrackingNoDTO {
-    private Integer trackingNo;
+    private String trackingNo;
     private String orderStatus;
 }

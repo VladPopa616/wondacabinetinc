@@ -5,6 +5,7 @@ import com.wondacabinetinc.wondacabinetinc.datalayer.OrderTrackingNoDTO;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface OrderService {
 
@@ -30,5 +31,5 @@ public interface OrderService {
 
     public String deleteByEmail(String email);
 
-    public OrderTrackingNoDTO getOrderByTrackingNo(Integer trackingNo);
+    public OrderTrackingNoDTO getOrderByTrackingNo(String trackingNo);
 }

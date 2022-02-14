@@ -16,9 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.mail.MessagingException;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.sql.Timestamp;
+import java.util.*;
 import java.util.regex.Pattern;
 import static com.wondacabinetinc.wondacabinetinc.datalayer.EmailValidator.validateEmail;
 import java.util.stream.Collectors;
@@ -80,9 +79,14 @@ public class OrderServiceImpl implements OrderService {
         try{
             Random rand = new Random();
             order.setOrderId(rand.nextInt());
-            order.setTrackingNo(rand.nextInt());
+
             order.setOrderStatus("Awaiting Order");
-            order.setDesign("https://s2.q4cdn.com/498544986/files/doc_downloads/test.pdf");
+            String uuid = UUID.randomUUID().toString();
+            order.setTrackingNo(uuid);
+            Date date = new Date();
+            order.setOrderDate(new Timestamp(date.getTime()));
+//            order.setOrderDate();
+//            order.setDesign("https://s2.q4cdn.com/498544986/files/doc_downloads/test.pdf");
             LOG.debug("Order Added: order with ID {} saved", order.getOrderId());
             boolean validEmail = validateEmail(order.getEmail());
             if (validEmail){
@@ -107,14 +111,34 @@ public class OrderServiceImpl implements OrderService {
         try{
             Optional<Order> orderOpt = orderRepository.findById(id);
             Order foundOrder = orderOpt.get();
-            foundOrder.setOrderStatus(order.getOrderStatus());
-            foundOrder.setTrackingNo(order.getTrackingNo());
-            foundOrder.setDesign(order.getDesign());
-            foundOrder.setCabinetType(order.getCabinetType());
-            foundOrder.setMaterial(order.getMaterial());
-            foundOrder.setColor(order.getColor());
-            foundOrder.setHandleType(order.getHandleType());
-
+            if (order.getOrderStatus() != null && !order.getOrderStatus().isEmpty()){
+                foundOrder.setOrderStatus(order.getOrderStatus());
+            }
+//            foundOrder.setTrackingNo(order.getTrackingNo());
+            if (order.getDesign() != null && !order.getDesign().isEmpty()) {
+                foundOrder.setDesign(order.getDesign());
+            }
+            if (order.getCabinetType() != null && !order.getCabinetType().isEmpty()) {
+                foundOrder.setCabinetType(order.getCabinetType());
+            }
+            if (order.getMaterial() != null && !order.getMaterial().isEmpty()) {
+                foundOrder.setMaterial(order.getMaterial());
+            }
+            if (order.getColor() != null && !order.getColor().isEmpty()) {
+                foundOrder.setColor(order.getColor());
+            }
+            if (order.getHandleType() != null && !order.getHandleType().isEmpty()) {
+                foundOrder.setHandleType(order.getHandleType());
+            }
+            if (order.getAddress() != null && !order.getAddress().isEmpty()){
+                foundOrder.setAddress(order.getAddress());
+            }
+            if (order.getCity() != null && !order.getCity().isEmpty()){
+                foundOrder.setCity(order.getCity());
+            }
+            if (order.getDeliveryDate() != null){
+                foundOrder.setDeliveryDate(order.getDeliveryDate());
+            }
             LOG.debug("Order with Id {} updated", id);
             mailService.sendUpdateEmailWithAttachment("wondacabinetinctestemail@gmail.com", order);
             return orderRepository.save(foundOrder);
@@ -170,7 +194,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderTrackingNoDTO getOrderByTrackingNo(Integer trackingNo) {
+    public OrderTrackingNoDTO getOrderByTrackingNo(String trackingNo) {
         try{
             Optional<Order> foundOrder = orderRepository.findByTrackingNoIs(trackingNo);
             if (foundOrder == null){
