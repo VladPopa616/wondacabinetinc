@@ -17,6 +17,8 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import javax.mail.MessagingException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 import static com.wondacabinetinc.wondacabinetinc.datalayer.EmailValidator.validateEmail;
@@ -140,7 +142,32 @@ public class OrderServiceImpl implements OrderService {
                 foundOrder.setDeliveryDate(order.getDeliveryDate());
             }
             LOG.debug("Order with Id {} updated", id);
-            mailService.sendUpdateEmailWithAttachment("wondacabinetinctestemail@gmail.com", order);
+            mailService.sendUpdateEmailWithAttachment("wondacabinetinctestemail@gmail.com", foundOrder);
+            return orderRepository.save(foundOrder);
+
+        }
+        catch(Exception e)
+        {
+            LOG.debug(e.getMessage());
+            throw new NotFoundException("Update Order with Id " + id + " failed");
+        }
+    }
+
+    @Override
+    public Order updateOrderDelivery(Integer id, String date ) {
+        try{
+            Optional<Order> orderOpt = orderRepository.findById(id);
+            Order foundOrder = orderOpt.get();
+
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date dateParsed = df.parse(date);
+//            String newDateString = df.format(startDate);
+            if (date != null){
+                foundOrder.setDeliveryDate(dateParsed);
+            }
+
+            LOG.debug("Order with Id {} updated", id);
+            mailService.sendUpdateEmailWithAttachment("wondacabinetinctestemail@gmail.com", foundOrder);
             return orderRepository.save(foundOrder);
 
         }

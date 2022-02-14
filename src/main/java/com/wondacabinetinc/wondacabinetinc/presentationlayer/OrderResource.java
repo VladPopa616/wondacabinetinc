@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PreDestroy;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @Slf4j
@@ -104,8 +101,15 @@ public class OrderResource {
     @CrossOrigin(origins = "*")
     @PreAuthorize("hasAuthority('ROLE_EMPLOYEE')")
     public Order updateOrder(@PathVariable("orderId") int orderId, @RequestBody Order order){
-        LOG.debug(orderId + order.toString() );
         return orderService.updateOrder(orderId, order);
+    }
+
+    @PutMapping("/delivery/{orderId}")
+    @ResponseBody
+    @CrossOrigin(origins = "*")
+    @PreAuthorize("hasAuthority('ROLE_EMPLOYEE')")
+    public Order updateOrderDelivery(@PathVariable("orderId") int orderId, @RequestBody String date){
+        return orderService.updateOrderDelivery(orderId, date);
     }
 
     @GetMapping("/email/{email}")

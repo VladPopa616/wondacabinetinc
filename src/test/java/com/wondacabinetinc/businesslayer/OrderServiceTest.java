@@ -245,6 +245,45 @@ public class OrderServiceTest {
         }
     }
 
+    @DisplayName("Update order")
+    @Test
+    public void update_order_delivery(){
+        Date date = new Date();
+        Order newOrder = new Order(1, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), null, "Material", "Handle", "vpopa18@gmail.com");
+
+        when(orderRepository.findById(1)).thenReturn(Optional.of(newOrder));
+
+        Optional<Order> retrieved = orderRepository.findById(1);
+        Order receivedOrder = retrieved.get();
+
+        String deliveryDate = new Timestamp(date.getTime()).toString();
+        orderService.updateOrderDelivery(1,deliveryDate);
+
+        assertEquals(receivedOrder.getDeliveryDate(), newOrder.getDeliveryDate());
+
+    }
+
+    @DisplayName("Update Order Delivery should return not found when id is not found")
+    @Test
+    public void update_order_delivery_should_return_not_found_for_non_existing_id(){
+        int orderId = 100;
+        String expectedMsg = "Order with Id: " + orderId + " not found";
+
+        Date date = new Date();
+        Order newOrder = new Order(1, "Done", UUID.randomUUID().toString(), "Design", "Kitchen Cabinet","White", "123 Address", "City", new Timestamp(date.getTime()), new Timestamp(date.getTime()), "Material", "Handle", "vpopa18@gmail.com");
+
+
+        String deliveryDate = new Timestamp(date.getTime()).toString();
+        when(orderRepository.findById(Mockito.anyInt())).thenThrow(new NotFoundException());
+
+        try{
+            orderService.updateOrderDelivery(orderId, deliveryDate);
+        }
+        catch(Exception e){
+            assertEquals(e.getMessage(), expectedMsg);
+        }
+    }
+
     @DisplayName("Delete Order")
     @Test
     public void delete_order(){
