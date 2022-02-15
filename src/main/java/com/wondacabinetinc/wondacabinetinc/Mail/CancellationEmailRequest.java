@@ -3,16 +3,16 @@ package com.wondacabinetinc.wondacabinetinc.Mail;
 import org.hibernate.validator.constraints.Length;
 
 public class CancellationEmailRequest {
-    private long trackingNo;
+    private String trackingNo;
 
     @Length(max=5000)
     private String body;
 
-    public long getTrackingNo() {
+    public String getTrackingNo() {
         return trackingNo;
     }
 
-    public void setTrackingNo(long trackingNo) {
+    public void setTrackingNo(String trackingNo) {
         this.trackingNo = trackingNo;
     }
 

@@ -49,9 +49,9 @@ dependencies {
 	implementation group: 'org.passay', name: 'passay', version: '1.6.1'
 }
 
-//test {
-//	useJUnitPlatform()
-//	testLogging {
-//		events "passed", "skipped", "failed"
-//	}
-//}
+test {
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}
