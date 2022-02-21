@@ -1,0 +1,3 @@
+set OKTA_OAUTH2_ISSUER=https://dev-7962608.okta.com/oauth2/default
+set OKTA_OAUTH2_CLIENT_ID=0oa3xvs8ud2YZPfJq5d7
+set OKTA_OAUTH2_CLIENT_SECRET=E9-w6gB9cBJI2IHDJ1ySou2EtudKu_z6H84wyu__

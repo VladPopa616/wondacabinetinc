@@ -20,6 +20,7 @@ import java.util.Arrays;
 @ComponentScan("com.wondacabinetinc.wondacabinetinc")
 public class WondacabinetincApplication {
 
+
 	public static void main(String[] args) {
 
 		SpringApplication.run(WondacabinetincApplication.class, args);
