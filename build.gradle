@@ -34,7 +34,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	runtimeOnly 'mysql:mysql-connector-java'
+	if (project.hasProperty("prod")){
+//		implementation 'org.postgresql:postgresql:42.1.4'
+		runtimeOnly 'mysql:mysql-connector-java'
+	} else{
+		runtimeOnly 'mysql:mysql-connector-java'
+	}
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -49,6 +55,25 @@ dependencies {
 	implementation group: 'org.passay', name: 'passay', version: '1.6.1'
 }
 
+
+//bootRun{
+//	if (project.hasProperty("prod")){
+//		args("--spring.profiles.active=prod")
+//	}
+//	else{
+//		args("--spring.profiles.active=dev")
+//	}
+//
+//}
+//
+//processResources{
+//	if (project.hasProperty("prod")){
+//		rename("application-prod.properties", "application.properties")
+//	}
+//	else{
+//		rename("application-dev.properties", "application.properties")
+//	}
+//}
 //test {
 //	useJUnitPlatform()
 //	testLogging {
