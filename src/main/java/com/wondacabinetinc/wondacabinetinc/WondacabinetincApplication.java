@@ -33,7 +33,7 @@ public class WondacabinetincApplication {
 	public CorsFilter corsFilter() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.setAllowCredentials(true);
-		corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "https://wonda-cabinet-inc-front-end-2i3ga9944-lawrenceliang02.vercel.app"));
+		corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "https://wonda-cabinet-inc-front-end-2i3ga9944-lawrenceliang02.vercel.app" ));
 		corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
 				"Accept", "Authorization", "Origin, Accept", "X-Requested-With",
 				"Access-Control-Request-Method", "Access-Control-Request-Headers"));
