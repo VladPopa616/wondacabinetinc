@@ -142,7 +142,7 @@ public class OrderServiceImpl implements OrderService {
                 foundOrder.setDeliveryDate(order.getDeliveryDate());
             }
             LOG.debug("Order with Id {} updated", id);
-            mailService.sendUpdateEmailWithAttachment("wondacabinetinctestemail@gmail.com", foundOrder);
+            mailService.sendUpdateEmailWithAttachment(foundOrder.getEmail(), foundOrder);
             return orderRepository.save(foundOrder);
 
         }
@@ -167,7 +167,7 @@ public class OrderServiceImpl implements OrderService {
             }
 
             LOG.debug("Order with Id {} updated", id);
-            mailService.sendUpdateEmailWithAttachment("wondacabinetinctestemail@gmail.com", foundOrder);
+            mailService.sendUpdateEmailWithAttachment(foundOrder.getEmail(), foundOrder);
             return orderRepository.save(foundOrder);
 
         }
