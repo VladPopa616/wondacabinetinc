@@ -42,7 +42,7 @@ public class MailSenderServiceImp implements  MailSenderService{
 
         mimeMessageHelper.setFrom("noreply.wondacabinetinc@gmail.com");
         mimeMessageHelper.setTo(toEmail);
-        mimeMessageHelper.setCc("wondacabinetinctestemail@gmail.com");
+        mimeMessageHelper.setCc("noreply.wondacabinetinc@gmail.com");
         mimeMessageHelper.setText(body);
         mimeMessageHelper.setSubject(subject);
 
@@ -78,7 +78,7 @@ public class MailSenderServiceImp implements  MailSenderService{
 
             mimeMessageHelper.setFrom("noreply.wondacabinetinc@gmail.com");
             mimeMessageHelper.setTo(toEmail);
-            mimeMessageHelper.setCc("wondacabinetinctestemail@gmail.com");
+            mimeMessageHelper.setCc("noreply.wondacabinetinc@gmail.com");
             mimeMessageHelper.setText(body);
             mimeMessageHelper.setSubject(subject);
 
